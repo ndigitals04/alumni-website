@@ -1,0 +1,733 @@
+/**
+ * input.css
+ * -------------------------------------------------------------------------
+ * SOURCE file for Tailwind. Compiles into output.css via:
+ *   npm install   (first time only)
+ *   npm run build (one-off)
+ *   npm run watch (rebuilds automatically while editing)
+ * Never edit output.css by hand — edit this file instead.
+ * -------------------------------------------------------------------------
+ */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ========================================================================
+   CSS CUSTOM PROPERTIES — Brand color channels
+   -------------------------------------------------------------------------
+   These define the raw RGB channels (no "rgb()" wrapper, no alpha) for
+   every brand color.  The withOpacity() helper in tailwind.config.js
+   references these via var(--color-*) and injects the alpha at build time,
+   which is what makes utility classes like `border-[rgba(32,36,31,0.08)]` or `bg-[rgba(11,107,58,0.10)]`
+   work in Tailwind v3.
+   ======================================================================== */
+:root {
+  /* Deep Green */
+  --color-forest:       11 107 58;    /* #0B6B3A */
+  --color-forest-dark:  7  63  34;    /* #073F22 */
+  --color-forest-light: 17 137 74;    /* #11894A */
+
+  /* Gold */
+  --color-gold:         212 175 55;   /* #D4AF37 */
+  --color-gold-soft:    241 215 140;  /* #F1D78C */
+  --color-gold-deep:    168 132 42;   /* #A8842A */
+
+  /* Ink / Dark Gray */
+  --color-ink:          32  36  31;   /* #20241F */
+  --color-ink-soft:     75  80  72;   /* #4B5048 */
+
+  /* Section tint */
+  --color-mist:         244 247 244;  /* #F4F7F4 */
+}
+
+/* ========================================================================
+   BASE
+   ======================================================================== */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-mist text-ink font-body antialiased;
+  }
+  h1, h2, h3, h4 {
+    @apply font-display text-ink;
+  }
+
+  /* Visible focus ring for keyboard navigation, applied to every
+     interactive element site-wide (WCAG requirement) */
+  a:focus-visible,
+  button:focus-visible,
+  label:focus-visible,
+  input:focus-visible {
+    outline: 2px solid #D4AF37;
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+}
+
+/* ========================================================================
+   COMPONENTS
+   ======================================================================== */
+@layer components {
+
+  .container-content {
+    @apply max-w-content mx-auto px-6 sm:px-10;
+  }
+
+  /* Small uppercase mono label used above section headings ("eyebrow") */
+  .eyebrow {
+    @apply inline-flex items-center gap-2 font-mono text-xs sm:text-sm uppercase tracking-[0.18em] text-gold-soft;
+  }
+
+  /* Primary CTA: solid gold, dark green text -> the brief's "premium" accent */
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-gold px-7 py-3.5
+           font-body text-sm sm:text-base font-semibold text-forest-dark
+           shadow-lg shadow-black/10
+           transition-all duration-300 hover:-translate-y-0.5 hover:bg-gold-soft;
+  }
+
+  /* Secondary CTA: outline on dark backgrounds (used in the hero) */
+  .btn-outline-light {
+    @apply inline-flex items-center justify-center gap-2 rounded-full border border-white/40 px-7 py-3.5
+           font-body text-sm sm:text-base font-semibold text-white
+           backdrop-blur-sm
+           transition-all duration-300 hover:-translate-y-0.5 hover:border-white hover:bg-white/10;
+  }
+
+  /* Scroll-down cue at the base of the hero */
+  .scroll-cue {
+    @apply absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/70;
+  }
+
+  /* =====================================================================
+     ANNOUNCEMENT BAR
+     ===================================================================== */
+  .announcement-bar {
+    @apply relative bg-gold-soft;
+  }
+  .announcement-close {
+    @apply flex h-5 w-5 cursor-pointer items-center justify-center rounded-full text-[rgba(7,63,34,0.70)]
+           transition-colors hover:bg-[rgba(7,63,34,0.10)] hover:text-forest-dark;
+  }
+  /* The checkbox-hack: checking the hidden checkbox hides the bar that
+     follows it in the DOM. This is the only thing making the banner
+     "dismissible" -- no JavaScript involved. */
+  .announcement-dismiss:checked ~ .announcement-bar {
+    @apply hidden;
+  }
+
+  /* =====================================================================
+     NAVIGATION BAR
+     ===================================================================== */
+  .nav-bar {
+    @apply border-b border-[rgba(32,36,31,0.08)] bg-white/80 backdrop-blur-md transition-all duration-300;
+  }
+
+  .nav-link {
+    @apply relative inline-flex items-center gap-1.5 py-1 font-body text-sm font-medium text-ink-soft
+           transition-colors duration-200 hover:text-forest;
+  }
+  /* Underline that grows from 0 -> full width on hover, via a pseudo-element */
+  .nav-link::after {
+    content: "";
+    @apply absolute -bottom-1 left-0 h-[2px] w-0 bg-gold transition-all duration-300;
+  }
+  .nav-link:hover::after,
+  .nav-link.is-active::after {
+    @apply w-full;
+  }
+  .nav-link.is-active {
+    @apply text-forest font-semibold;
+  }
+  .nav-link--trigger {
+    @apply cursor-pointer bg-transparent;
+  }
+
+  /* Buttons used in the nav (distinct from the hero's light-on-dark buttons) */
+  .btn-outline-dark {
+    @apply inline-flex items-center justify-center gap-2 rounded-full border border-[rgba(32,36,31,0.15)] px-5 py-2.5
+           font-body text-sm font-semibold text-ink
+           transition-all duration-300 hover:-translate-y-0.5 hover:border-forest hover:text-forest;
+  }
+  .btn-fill-green {
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-forest px-5 py-2.5
+           font-body text-sm font-semibold text-white shadow-md shadow-[rgba(11,107,58,0.20)]
+           transition-all duration-300 hover:-translate-y-0.5 hover:bg-forest-light;
+  }
+
+  .search-icon-btn {
+    @apply flex h-9 w-9 cursor-pointer items-center justify-center rounded-full text-ink-soft
+           transition-colors duration-200 hover:bg-mist hover:text-forest;
+  }
+
+  /* =====================================================================
+     MEGA MENU (Initiatives) + DROPDOWNS (Community / News)
+     Shown via :hover or :focus-within on the parent <li class="group">,
+     which makes them reachable by keyboard (tab into the trigger or any
+     item inside reveals the panel too).
+     ===================================================================== */
+  .mega-menu,
+  .dropdown-panel {
+    @apply invisible absolute left-1/2 top-full z-40 -translate-x-1/2 translate-y-1 rounded-2xl border border-[rgba(32,36,31,0.08)]
+           bg-white/95 p-3 opacity-0 shadow-2xl shadow-[rgba(32,36,31,0.10)] backdrop-blur-xl
+           transition-all duration-300 pointer-events-none mt-3;
+  }
+  .group:hover .mega-menu,
+  .group:focus-within .mega-menu,
+  .group:hover .dropdown-panel,
+  .group:focus-within .dropdown-panel {
+    @apply visible translate-y-0 opacity-100 pointer-events-auto;
+  }
+
+  .mega-menu {
+    width: min(860px, 90vw);
+  }
+  .mega-menu__grid {
+    @apply grid grid-cols-3 gap-2;
+  }
+  .mega-card {
+    @apply flex flex-col gap-2 rounded-xl p-4 transition-all duration-200 hover:-translate-y-0.5 hover:bg-mist;
+  }
+  .mega-card__icon {
+    @apply flex h-9 w-9 items-center justify-center rounded-full bg-[rgba(11,107,58,0.10)] text-sm text-forest;
+  }
+  .mega-card__title {
+    @apply font-body text-sm font-semibold text-ink;
+  }
+  .mega-card__desc {
+    @apply font-body text-xs leading-snug text-ink-soft;
+  }
+
+  .dropdown-panel {
+    left: 0;
+    transform: translateX(0) translateY(0.25rem);
+    width: 17rem;
+  }
+  .group:hover .dropdown-panel,
+  .group:focus-within .dropdown-panel {
+    transform: translateX(0) translateY(0);
+  }
+
+  .dropdown-item {
+    @apply block rounded-lg px-3 py-2.5 font-body text-sm text-ink transition-colors duration-150 hover:bg-mist;
+  }
+  .dropdown-item--disabled {
+    @apply flex cursor-not-allowed items-center justify-between text-[rgba(75,80,72,0.60)] hover:bg-transparent;
+  }
+  .soon-tag {
+    @apply rounded-full bg-[rgba(212,175,55,0.15)] px-2 py-0.5 font-mono text-[9px] uppercase tracking-wide text-gold-deep;
+  }
+
+  /* =====================================================================
+     SEARCH MODAL
+     Opened via the .search-toggle checkbox-hack; no JS involved.
+     ===================================================================== */
+  .search-modal-backdrop {
+    @apply invisible fixed inset-0 z-[70] flex items-start justify-center bg-[rgba(32,36,31,0.40)] opacity-0
+           backdrop-blur-sm transition-all duration-300 pointer-events-none;
+    padding-top: 12vh;
+  }
+  .search-toggle:checked ~ .search-modal-backdrop {
+    @apply visible opacity-100 pointer-events-auto;
+  }
+  .search-modal {
+    @apply w-full max-w-lg scale-95 rounded-2xl bg-white shadow-2xl transition-all duration-300;
+  }
+  .search-toggle:checked ~ .search-modal-backdrop .search-modal {
+    @apply scale-100;
+  }
+  .search-modal__input {
+    @apply w-full border-none bg-transparent font-body text-sm text-ink outline-none placeholder:text-[rgba(75,80,72,0.70)];
+  }
+  .search-modal__close {
+    @apply flex h-8 w-8 cursor-pointer items-center justify-center rounded-full text-ink-soft
+           transition-colors hover:bg-mist hover:text-ink;
+  }
+  .search-suggestion {
+    @apply rounded-full border border-[rgba(32,36,31,0.10)] px-3.5 py-1.5 font-body text-xs font-medium text-ink-soft
+           transition-colors duration-200 hover:border-forest hover:text-forest;
+  }
+
+  /* =====================================================================
+     MOBILE FULL-SCREEN MENU
+     Hidden by default; JS toggles `hidden` <-> `flex is-open`. The
+     `.is-open` class is what triggers the staggered entrance below.
+     ===================================================================== */
+  .mobile-menu {
+    @apply fixed inset-0 z-[80] flex-col overflow-y-auto bg-gradient-to-b from-forest-dark to-forest;
+  }
+  .mobile-menu .menu-item {
+    opacity: 0;
+  }
+  .mobile-menu.is-open .menu-item {
+    animation: fadeUp 0.5s ease-out both;
+  }
+
+  .mobile-link {
+    @apply block border-b border-white/10 py-4 font-display text-2xl font-medium text-white/90;
+  }
+  .mobile-link.is-active {
+    @apply text-gold;
+  }
+
+  .social-icon-light {
+    @apply flex h-10 w-10 items-center justify-center rounded-full border border-white/20 text-white/80
+           transition-colors duration-200 hover:border-gold hover:text-gold;
+  }
+
+  /* =====================================================================
+     SECTION HEADER HELPER
+     The hero's .eyebrow is gold-on-dark; this variant is for use on the
+     light page background further down (forest-colored instead of gold,
+     for contrast against white/mist sections).
+     ===================================================================== */
+  .eyebrow--light {
+    @apply !text-forest;
+  }
+
+  /* =====================================================================
+     STAT CARDS ("Why We Exist")
+     ===================================================================== */
+  .stat-card {
+    @apply flex flex-col gap-3 rounded-2xl border border-[rgba(32,36,31,0.08)] bg-white p-5 shadow-sm
+           transition-all duration-300 hover:-translate-y-1 hover:shadow-lg sm:p-6;
+  }
+  .stat-card__icon {
+    @apply flex h-10 w-10 items-center justify-center rounded-full bg-[rgba(11,107,58,0.10)] text-base text-forest;
+  }
+  .stat-card__value {
+    @apply font-display text-3xl font-semibold text-ink;
+  }
+  .stat-card__label {
+    @apply font-body text-sm text-ink-soft;
+  }
+
+  /* =====================================================================
+     MISSION CARDS ("Our Mission")
+     ===================================================================== */
+  .mission-card {
+    @apply flex flex-col gap-4 rounded-2xl border border-[rgba(32,36,31,0.08)] bg-white p-7
+           transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-[rgba(32,36,31,0.05)];
+  }
+  .mission-card__icon {
+    @apply flex h-12 w-12 items-center justify-center rounded-full bg-forest text-lg text-white;
+  }
+  .mission-card__title {
+    @apply font-display text-xl font-semibold text-ink;
+  }
+  .mission-card__desc {
+    @apply font-body text-sm leading-relaxed text-ink-soft;
+  }
+
+  /* =====================================================================
+     VISION TIMELINE
+     Desktop: a 6-column grid with a connecting line behind the icons.
+     Mobile: the grid collapses to a horizontally scrollable row so all
+     six steps remain reachable without overlap.
+     ===================================================================== */
+  .timeline {
+    @apply relative mt-16 grid grid-flow-col auto-cols-[14rem] gap-6 overflow-x-auto pb-4
+           sm:auto-cols-auto sm:grid-cols-3 lg:grid-cols-6 lg:overflow-visible lg:pb-0;
+  }
+  .timeline__line {
+    @apply absolute left-0 right-0 top-7 hidden h-px bg-[rgba(32,36,31,0.10)] lg:block;
+  }
+  .timeline__step {
+    @apply relative flex flex-col items-center gap-3 text-center;
+    /* Progressive-enhancement scroll reveal: only runs in browsers that
+       support CSS scroll-driven animations. Elsewhere, opacity/transform
+       are left at their default (fully visible) -- see @supports rule
+       below for where the animation itself is actually attached. */
+    opacity: 1;
+  }
+  .timeline__icon {
+    @apply z-10 flex h-14 w-14 items-center justify-center rounded-full border-2 border-gold bg-white text-lg text-forest shadow-sm;
+  }
+  .timeline__title {
+    @apply font-display text-sm font-semibold text-ink;
+  }
+  .timeline__desc {
+    @apply font-body text-xs leading-snug text-ink-soft;
+  }
+
+  /* Pure-CSS scroll-driven reveal (no JS). Each step fades up as it
+     enters the viewport, then settles. Only active where the browser
+     supports `animation-timeline`; everything stays visible otherwise. */
+  @supports (animation-timeline: view()) {
+    .timeline__step {
+      opacity: 0;
+      animation: timelineReveal 0.6s ease-out both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 30%;
+    }
+  }
+
+  /* =====================================================================
+     INITIATIVE CARDS ("Featured Initiatives Preview")
+     ===================================================================== */
+  .initiative-card {
+    @apply flex flex-col gap-3 rounded-2xl border border-[rgba(32,36,31,0.08)] bg-white p-7
+           transition-all duration-300 hover:-translate-y-1 hover:border-[rgba(11,107,58,0.30)] hover:shadow-xl hover:shadow-[rgba(32,36,31,0.05)];
+  }
+  .initiative-card__icon {
+    @apply flex h-11 w-11 items-center justify-center rounded-full bg-[rgba(11,107,58,0.10)] text-base text-forest;
+  }
+  .initiative-card__title {
+    @apply font-display text-lg font-semibold text-ink;
+  }
+  .initiative-card__desc {
+    @apply font-body text-sm leading-relaxed text-ink-soft;
+  }
+  .initiative-card__link {
+    @apply mt-1 inline-flex items-center gap-2 font-body text-sm font-semibold text-forest
+           transition-all duration-200;
+  }
+  .initiative-card:hover .initiative-card__link i {
+    @apply translate-x-1;
+  }
+  .initiative-card__link i {
+    @apply transition-transform duration-200;
+  }
+
+  /* =====================================================================
+     FINAL CTA BANNER
+     ===================================================================== */
+  .cta-banner {
+    @apply relative overflow-hidden rounded-3xl bg-gradient-to-br from-forest-dark via-forest to-forest-dark px-6 py-16 sm:px-12 sm:py-20;
+  }
+  .cta-banner__pattern {
+    @apply absolute inset-0 h-full w-full opacity-70;
+  }
+
+  /* =====================================================================
+     THE CHALLENGE — alternating storytelling rows (About page)
+     ===================================================================== */
+  .challenge-row {
+    @apply flex flex-col items-center gap-8 sm:flex-row sm:gap-12 lg:gap-16;
+  }
+  .challenge-row--reverse {
+    @apply sm:flex-row-reverse;
+  }
+  .challenge-row__art {
+    @apply w-full max-w-[220px] flex-shrink-0 sm:w-56;
+  }
+  .challenge-row__art svg {
+    @apply h-auto w-full;
+  }
+  .challenge-row__text {
+    @apply max-w-xl;
+  }
+  .challenge-row__title {
+    @apply font-display text-xl font-semibold text-ink sm:text-2xl;
+  }
+  .challenge-row__desc {
+    @apply mt-3 font-body text-sm leading-relaxed text-ink-soft sm:text-base;
+  }
+
+  /* =====================================================================
+     VISION & MISSION CARDS
+     ===================================================================== */
+  .vm-card {
+    @apply rounded-3xl p-8 sm:p-10;
+  }
+  .vm-card--dark {
+    @apply bg-gradient-to-br from-forest-dark via-forest to-forest-dark;
+  }
+  .vm-card--light {
+    @apply border border-[rgba(32,36,31,0.08)] bg-white;
+  }
+  .vm-card__icon {
+    @apply mb-5 flex h-12 w-12 items-center justify-center rounded-full text-lg;
+  }
+  .vm-card__icon--dark {
+    @apply bg-white/10 text-gold;
+  }
+  .vm-card__icon--light {
+    @apply bg-[rgba(11,107,58,0.10)] text-forest;
+  }
+  .vm-card__label {
+    @apply mb-3 font-mono text-xs uppercase tracking-[0.18em];
+  }
+  .vm-card__label--dark {
+    @apply text-gold-soft;
+  }
+  .vm-card__label--light {
+    @apply text-forest;
+  }
+  .vm-card__statement {
+    @apply font-display text-xl leading-snug sm:text-2xl;
+  }
+  .vm-card__statement--dark {
+    @apply text-white;
+  }
+  .vm-card__statement--light {
+    @apply text-ink;
+  }
+
+  /* =====================================================================
+     CORE OBJECTIVES — 7 cards, centered flex-wrap (so the leftover card
+     in the last row centers itself instead of sitting off to one side)
+     ===================================================================== */
+  .objectives-grid {
+    @apply mt-14 flex flex-wrap justify-center gap-6;
+  }
+  .objective-card {
+    @apply flex flex-col gap-3 rounded-2xl border border-[rgba(32,36,31,0.08)] bg-white p-6
+           transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-[rgba(32,36,31,0.05)];
+    width: 100%;
+  }
+  @media (min-width: 640px) {
+    .objective-card { width: calc(50% - 0.75rem); }
+  }
+  @media (min-width: 1024px) {
+    .objective-card { width: calc(25% - 1.125rem); }
+  }
+  .objective-card__icon {
+    @apply flex h-11 w-11 items-center justify-center rounded-full bg-[rgba(11,107,58,0.10)] text-base text-forest;
+  }
+  .objective-card__title {
+    @apply font-display text-base font-semibold text-ink;
+  }
+  .objective-card__desc {
+    @apply font-body text-sm leading-relaxed text-ink-soft;
+  }
+
+  /* =====================================================================
+     LONG-TERM VISION ROADMAP — vertical cycle with a looping connector
+     ===================================================================== */
+  .roadmap {
+    @apply relative mx-auto mt-16 flex max-w-xs flex-col items-center;
+  }
+  .roadmap__loop {
+    @apply absolute -right-2 top-0 hidden h-full w-24 sm:block;
+  }
+  .roadmap__loop svg {
+    @apply h-full w-full;
+  }
+  .roadmap__step {
+    @apply flex w-full items-center gap-4 rounded-2xl border border-[rgba(32,36,31,0.08)] bg-white px-5 py-4 shadow-sm;
+  }
+  .roadmap__icon {
+    @apply flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-forest text-sm text-white;
+  }
+  .roadmap__label {
+    @apply font-display text-sm font-semibold text-ink sm:text-base;
+  }
+  .roadmap__arrow {
+    @apply my-2 text-xs text-gold;
+  }
+  .roadmap__loop-caption {
+    @apply mt-6 font-mono text-xs uppercase tracking-[0.14em] text-gold-deep;
+  }
+
+  /* =====================================================================
+     LARGE ILLUSTRATION VARIANT (Initiatives page > Infrastructure)
+     Reuses .challenge-row but with a bigger art column, since this
+     section explicitly calls for "large illustrations".
+     ===================================================================== */
+  .challenge-row__art--lg {
+    @apply sm:w-72 lg:w-80;
+    max-width: 280px;
+  }
+
+  /* =====================================================================
+     FUTURE PROJECTS — "Coming Soon" roadmap
+     Dashed, muted styling (vs. the About page's solid Vision roadmap)
+     to visually signal "planned" rather than "active".
+     ===================================================================== */
+  .future-roadmap {
+    @apply mt-14 grid grid-flow-col auto-cols-[14rem] gap-5 overflow-x-auto pb-4
+           sm:auto-cols-auto sm:grid-cols-2 lg:grid-cols-4 lg:overflow-visible lg:pb-0;
+  }
+  .future-roadmap__step {
+    @apply flex flex-col items-start gap-2 rounded-2xl border-2 border-dashed border-[rgba(32,36,31,0.15)]
+           bg-white/60 p-6 transition-colors duration-300 hover:border-gold;
+  }
+  .future-roadmap__icon {
+    @apply mb-2 flex h-11 w-11 items-center justify-center rounded-full bg-[rgba(32,36,31,0.05)] text-base text-ink-soft;
+  }
+  .future-roadmap__phase {
+    @apply font-mono text-[11px] uppercase tracking-[0.14em] text-[rgba(75,80,72,0.70)];
+  }
+  .future-roadmap__title {
+    @apply font-display text-base font-semibold text-ink;
+  }
+
+  /* "Current page" treatment for the Donate button -- used on the
+     Support page itself, since it has no dedicated nav link to mark
+     active the normal way. */
+  .btn-outline-dark.is-active {
+    @apply border-forest text-forest;
+  }
+  .btn-outline-light.is-active {
+    @apply border-gold text-gold;
+  }
+
+  /* =====================================================================
+     FUNDING MODEL — vertical flow + fork connector (Support page)
+     ===================================================================== */
+  .funding-flow {
+    @apply relative mx-auto mt-16 flex max-w-2xl flex-col items-center;
+  }
+  .funding-flow__fork {
+    @apply h-16 w-full max-w-2xl;
+  }
+  .funding-split {
+    @apply mt-2 grid w-full max-w-2xl grid-cols-1 gap-4 sm:grid-cols-3;
+  }
+
+  /* =====================================================================
+     MEMBERSHIP JOURNEY — linear stepper (Join page)
+     Reuses .roadmap__icon / .roadmap__label / .roadmap__arrow, just
+     without the loop-back connector since this journey isn't cyclic.
+     ===================================================================== */
+  .stepper {
+    @apply relative mx-auto mt-16 flex max-w-xs flex-col items-center;
+  }
+  .stepper__step {
+    @apply flex w-full items-center gap-4 rounded-2xl border border-[rgba(32,36,31,0.08)] bg-white px-5 py-4 shadow-sm;
+  }
+
+  /* =====================================================================
+     MEMBERSHIP CATEGORY CARDS (benefits, not pricing)
+     ===================================================================== */
+  .member-card {
+    @apply relative flex flex-col rounded-3xl border border-[rgba(32,36,31,0.08)] bg-white p-8;
+  }
+  .member-card--featured {
+    @apply border-2 border-gold shadow-xl shadow-[rgba(212,175,55,0.10)] lg:-translate-y-2;
+  }
+  .member-card__badge {
+    @apply absolute -top-3 left-8 rounded-full bg-gold px-3 py-1 font-mono text-[10px] uppercase tracking-wide text-forest-dark;
+  }
+  .member-card__icon {
+    @apply mb-5 flex h-12 w-12 items-center justify-center rounded-full bg-[rgba(11,107,58,0.10)] text-lg text-forest;
+  }
+  .member-card__icon--featured {
+    @apply bg-forest text-white;
+  }
+  .member-card__title {
+    @apply font-display text-xl font-semibold text-ink;
+  }
+  .member-card__tagline {
+    @apply mt-2 font-body text-sm text-ink-soft;
+  }
+  .member-card__list {
+    @apply mt-6 flex flex-1 flex-col gap-3 font-body text-sm text-ink;
+  }
+  .member-card__list li {
+    @apply flex items-start gap-2.5;
+  }
+  .member-card__list i {
+    @apply mt-1 text-xs text-forest;
+  }
+  .member-card__cta {
+    @apply mt-8 w-full;
+  }
+
+  /* =====================================================================
+     FAQ ACCORDION — pure CSS, no JS.
+     The hidden checkbox's :checked state (matched via the general
+     sibling selector) drives the grid-template-rows trick below, which
+     animates from 0fr -> 1fr for a smooth "auto height" expand/collapse.
+     ===================================================================== */
+  .accordion-item {
+    @apply border-b border-[rgba(32,36,31,0.10)];
+  }
+  .accordion-question {
+    @apply flex cursor-pointer items-center justify-between gap-4 py-5 font-display text-base font-semibold text-ink
+           transition-colors duration-200 hover:text-forest sm:text-lg;
+  }
+  .accordion-icon {
+    @apply flex-shrink-0 text-sm text-gold-deep transition-transform duration-300;
+  }
+  .accordion-toggle:checked + .accordion-question .accordion-icon {
+    @apply rotate-45;
+  }
+
+  .accordion-answer {
+    display: grid;
+    grid-template-rows: 0fr;
+    overflow: hidden;
+    transition: grid-template-rows 300ms ease;
+  }
+  .accordion-toggle:checked ~ .accordion-answer {
+    grid-template-rows: 1fr;
+  }
+  .accordion-answer__inner {
+    @apply min-h-0 font-body text-sm leading-relaxed text-ink-soft sm:text-base;
+    /* Padding-bottom is tied to the checked state (not applied by
+       default) -- if it were always present, it would create a fixed
+       minimum height on the collapsed row even with min-height: 0,
+       since padding always counts toward a grid item's automatic
+       minimum size. Transitioning it alongside grid-template-rows
+       keeps the collapsed state at a true 0. */
+    padding-bottom: 0;
+    transition: padding-bottom 300ms ease;
+  }
+  .accordion-toggle:checked ~ .accordion-answer .accordion-answer__inner {
+    padding-bottom: 1.25rem;
+  }
+
+  /* =====================================================================
+     SITE FOOTER
+     Dark-green gradient footer used on every page. The four nav columns
+     sit in a 6-column grid (brand=2, each nav col=1) on large screens,
+     collapsing to a 2-column grid on sm and a single column on mobile.
+     ===================================================================== */
+  .footer-social-icon {
+    @apply flex h-9 w-9 items-center justify-center rounded-full border border-white/15 text-white/60
+           transition-all duration-200 hover:border-gold hover:text-gold;
+  }
+
+  .footer-nav-heading {
+    @apply font-mono text-[11px] uppercase tracking-[0.18em] text-gold-soft mb-5;
+  }
+
+  .footer-nav-link {
+    @apply font-body text-sm text-white/60 transition-colors duration-200 hover:text-white;
+  }
+}
+
+/* ========================================================================
+   MOTION: staggered entrance delays for hero content
+   (plain CSS, no JS — each child waits slightly longer than the last)
+   ======================================================================== */
+@layer utilities {
+  .delay-1 { animation-delay: 0.1s; }
+  .delay-2 { animation-delay: 0.25s; }
+  .delay-3 { animation-delay: 0.4s; }
+  .delay-4 { animation-delay: 0.55s; }
+  .delay-5 { animation-delay: 0.7s; }
+  .delay-6 { animation-delay: 0.85s; }
+  .delay-7 { animation-delay: 1s; }
+
+  /* Visually hides the announcement/search checkboxes while keeping them
+     reachable for screen readers and keyboard users */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+}
+
+/* Respect users who've asked for less motion: freeze entrance + ambient
+   animation so the page is still legible without movement */
+@media (prefers-reduced-motion: reduce) {
+  .animate-fadeUp,
+  .animate-nodePulse,
+  .animate-scrollCue,
+  .mobile-menu.is-open .menu-item {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}

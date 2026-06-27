@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NACOS UNN Alumni Association</title>
+  <meta name="description" content="The NACOS UNN Alumni Association unites graduates of the University of Nigeria, Nsukka Computer Science Department to advance student success and strengthen the department." />
+
+  <!-- Fonts: Fraunces (display/serif), Inter (body), Space Grotesk (eyebrows/labels) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+  <!-- Compiled Tailwind output. Generated from input.css + tailwind.config.js -->
+  <link rel="stylesheet" href="./css/output.css">
+</head>
+
+<body>
+
+  <!-- =====================================================================
+       ANNOUNCEMENT BAR
+       Dismissible with ZERO JavaScript: a visually-hidden checkbox plus a
+       <label> styled as the close (x) button. Checking the box matches
+       the `.announcement-dismiss:checked ~ .announcement-bar` CSS rule
+       in input.css, which hides the bar. This only lasts for the current
+       page view (no JS/localStorage means it reappears on reload) --
+       that's the tradeoff for keeping this 100% CSS-driven.
+  ====================================================================== -->
+  <input type="checkbox" id="announcement-dismiss" class="announcement-dismiss sr-only" />
+  <div class="announcement-bar">
+    <div class="container-content flex items-center justify-center gap-3 py-2.5 text-center">
+      <p class="font-body text-xs sm:text-sm font-medium text-forest-dark">
+        📢 Alumni Registration is Now Open
+      </p>
+      <label for="announcement-dismiss" class="announcement-close" aria-label="Dismiss announcement">
+        <i class="fa-solid fa-xmark"></i>
+      </label>
+    </div>
+  </div>
+
+  <!-- =====================================================================
+       PRIMARY NAVIGATION
+       Sticky, translucent, backdrop-blurred bar. Stays visually consistent
+       at every scroll position (see chat note: the brief's "transparent at
+       top, solid after scroll" behaviour needs a JS scroll-listener, which
+       is out of scope here, so this single look is used throughout).
+
+       Interaction techniques used, all CSS-only:
+         - Mega menu / dropdowns: `.group` + `:hover` / `:focus-within`,
+           so they're fully keyboard-operable by tabbing in.
+         - Search modal: a checkbox-hack (hidden checkbox + label),
+           same technique as the announcement bar above.
+       The mobile slide-in menu is the ONE place this build uses
+       JavaScript, exactly as agreed -- see the <script> at the bottom.
+  ====================================================================== -->
+  <header class="sticky top-0 z-50">
+    <nav aria-label="Primary" class="nav-bar">
+      <div class="container-content flex items-center justify-between py-3.5 lg:py-4">
+
+        <!-- LEFT: logo mark + wordmark + tagline. Links back to the homepage. -->
+        <a href="#home" class="flex items-center  gap-3" aria-label="NACOS UNN Alumni Association — go to homepage">
+          <!-- logo mark. -->
+        
+          <div class="w-10 h-10 rounded-full overflow-hidden bg-white/5 flex items-center justify-center">
+              <img class="w-full h-full" src="./images/nacos_logo.jpg" alt="NACOS LOGO">
+          </div>
+          <span class="flex flex-col leading-tight">
+            <span class="font-display text-base font-semibold text-ink sm:text-lg">NACOS UNN Alumni</span>
+            <span class="font-mono text-[9px] uppercase tracking-[0.14em] text-ink-soft sm:text-[10px]">Building Generations of Excellence</span>
+          </span>
+        </a>
+
+        <!-- CENTER: desktop nav links (hidden below the lg breakpoint) -->
+        <ul class="hidden items-center gap-7 lg:flex" role="list">
+          <li>
+            <a href="#home" class="nav-link is-active" aria-current="page">Home</a>
+          </li>
+          <li>
+            <a href="about.html" class="nav-link">About</a>
+          </li>
+
+          <!-- INITIATIVES — mega menu (6 cards) -->
+          <li class="group relative">
+            <button type="button" class="nav-link nav-link--trigger" aria-haspopup="true" aria-expanded="false">
+              Initiatives
+              <i class="fa-solid fa-chevron-down text-[9px] transition-transform duration-300 group-hover:rotate-180 group-focus-within:rotate-180"></i>
+            </button>
+
+            <div class="mega-menu" role="menu">
+              <div class="mega-menu__grid">
+
+                <a href="initiatives.html#infrastructure" class="mega-card" role="menuitem">
+                  <span class="mega-card__icon"><i class="fa-solid fa-building"></i></span>
+                  <span class="mega-card__title">Infrastructure</span>
+                  <span class="mega-card__desc">Modern learning facilities.</span>
+                </a>
+
+                <a href="initiatives.html#scholarships" class="mega-card" role="menuitem">
+                  <span class="mega-card__icon"><i class="fa-solid fa-graduation-cap"></i></span>
+                  <span class="mega-card__title">Scholarships</span>
+                  <span class="mega-card__desc">Financial support for students.</span>
+                </a>
+
+                <a href="initiatives.html#career-coaching" class="mega-card" role="menuitem">
+                  <span class="mega-card__icon"><i class="fa-solid fa-briefcase"></i></span>
+                  <span class="mega-card__title">Career Development</span>
+                  <span class="mega-card__desc">Industry training and certifications.</span>
+                </a>
+
+                <a href="initiatives.html#mentorship" class="mega-card" role="menuitem">
+                  <span class="mega-card__icon"><i class="fa-solid fa-handshake"></i></span>
+                  <span class="mega-card__title">Mentorship</span>
+                  <span class="mega-card__desc">Connect students with experienced alumni.</span>
+                </a>
+
+                <a href="initiatives.html#alumni-engagement" class="mega-card" role="menuitem">
+                  <span class="mega-card__icon"><i class="fa-solid fa-users"></i></span>
+                  <span class="mega-card__title">Community</span>
+                  <span class="mega-card__desc">Networking events and reunions.</span>
+                </a>
+
+                <a href="initiatives.html#recognition" class="mega-card" role="menuitem">
+                  <span class="mega-card__icon"><i class="fa-solid fa-award"></i></span>
+                  <span class="mega-card__title">Recognition</span>
+                  <span class="mega-card__desc">Awards and academic excellence.</span>
+                </a>
+
+              </div>
+            </div>
+          </li>
+
+          <li>
+            <a href="./projects.html" class="nav-link">Projects &amp; Impact</a>
+          </li>
+
+          <!-- COMMUNITY — simple dropdown -->
+          <li class="group relative">
+            <button type="button" class="nav-link nav-link--trigger" aria-haspopup="true" aria-expanded="false">
+              Community
+              <i class="fa-solid fa-chevron-down text-[9px] transition-transform duration-300 group-hover:rotate-180 group-focus-within:rotate-180"></i>
+            </button>
+            <div class="dropdown-panel" role="menu">
+              <span class="dropdown-item dropdown-item--disabled" role="menuitem" aria-disabled="true">
+                Alumni Directory <span class="soon-tag">Coming Soon</span>
+              </span>
+              <a href="./initiatives.html#mentorship" class="dropdown-item" role="menuitem">Mentorship</a>
+              <span href="#events" class="dropdown-item dropdown-item--disabled" role="menuitem" aria-disabled="true">Events</span>
+              <span href="#x-spaces" class="dropdown-item dropdown-item--disabled" role="menuitem" aria-disabled="true">X Spaces</span>
+              <a href="#volunteer" class="dropdown-item" role="menuitem">Volunteer</a>
+              <span class="dropdown-item dropdown-item--disabled" role="menuitem" aria-disabled="true">
+                Regional Chapters <span class="soon-tag">Coming Soon</span>
+              </span>
+            </div>
+          </li>
+
+          <!-- NEWS — simple dropdown -->
+          <li class="group relative">
+            <button type="button" class="nav-link nav-link--trigger" aria-haspopup="true" aria-expanded="false">
+              News
+              <i class="fa-solid fa-chevron-down text-[9px] transition-transform duration-300 group-hover:rotate-180 group-focus-within:rotate-180"></i>
+            </button>
+            <div class="dropdown-panel" role="menu">
+              <a href="#latest-news" class="dropdown-item" role="menuitem">Latest News</a>
+              <a href="#success-stories" class="dropdown-item" role="menuitem">Success Stories</a>
+              <a href="#project-updates" class="dropdown-item" role="menuitem">Project Updates</a>
+              <a href="#annual-reports" class="dropdown-item" role="menuitem">Annual Reports</a>
+              <a href="#press-releases" class="dropdown-item" role="menuitem">Press Releases</a>
+            </div>
+          </li>
+
+          <li>
+            <a href="#contact" class="nav-link">Contact</a>
+          </li>
+        </ul>
+
+        <!-- RIGHT: search, auth-area placeholder, and the two CTAs -->
+        <div class="hidden items-center gap-2 lg:flex">
+
+          <!-- Search trigger: opens the search modal via the checkbox-hack below -->
+          <label for="search-toggle" class="search-icon-btn" aria-label="Open search" role="button" tabindex="0">
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </label>
+
+          <!--
+            USER MENU (future-ready)
+            -----------------------------------------------------------------
+            Reserved slot for when authentication ships. Logged-out state
+            (today): the Donate + Join Alumni buttons below double as this
+            area. Once auth exists, replace those two links with an avatar
+            + dropdown containing: Dashboard, My Contributions, My
+            Membership, My Events, Settings, Logout. No markup is added
+            for that yet since it doesn't exist -- left as this comment.
+          -->
+
+          <a href="support.html" class="btn-outline-dark">Donate</a>
+          <a href="join.html" class="btn-fill-green">Join Alumni</a>
+        </div>
+
+        <!-- Mobile: search icon + hamburger (hidden at lg and above) -->
+        <div class="flex items-center gap-3 lg:hidden">
+          <label for="search-toggle" class="search-icon-btn" aria-label="Open search" role="button" tabindex="0">
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </label>
+          <button id="mobile-menu-btn" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu" class="search-icon-btn">
+            <i class="fa-solid fa-bars text-lg"></i>
+          </button>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <!-- =====================================================================
+       SEARCH MODAL
+       Opened/closed with the checkbox-hack (no JS): the hidden checkbox's
+       state is matched by `.search-toggle:checked ~ .search-modal-backdrop`
+       in input.css. Because there's no JS, this can't filter results as
+       you type or close on Escape/click-outside -- it shows a fixed set
+       of searchable categories instead. Wiring up real instant search
+       would need a small JS snippet; flag if you'd like to allow that.
+  ====================================================================== -->
+  <input type="checkbox" id="search-toggle" class="search-toggle sr-only" />
+  <div class="search-modal-backdrop">
+    <div class="search-modal" role="dialog" aria-modal="true" aria-label="Search the site">
+      <div class="flex items-center justify-between gap-4 border-b border-ink/10 p-5">
+        <label for="search-toggle" class="flex flex-1 items-center gap-3 cursor-text">
+          <i class="fa-solid fa-magnifying-glass text-ink-soft"></i>
+          <input type="search" placeholder="Search projects, news, alumni, events…" class="search-modal__input" />
+        </label>
+        <label for="search-toggle" class="search-modal__close" aria-label="Close search">
+          <i class="fa-solid fa-xmark"></i>
+        </label>
+      </div>
+      <div class="p-5">
+        <p class="mb-3 font-mono text-[11px] uppercase tracking-[0.16em] text-ink-soft">Browse by category</p>
+        <div class="flex flex-wrap gap-2">
+          <a href="#projects" class="search-suggestion">Projects</a>
+          <a href="#latest-news" class="search-suggestion">News</a>
+          <a href="#community" class="search-suggestion">Alumni</a>
+          <a href="#events" class="search-suggestion">Events</a>
+          <a href="initiatives.html#scholarships" class="search-suggestion">Scholarships</a>
+          <a href="#latest-news" class="search-suggestion">Articles</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- =====================================================================
+       MOBILE NAVIGATION (full-screen)
+       Hidden by default; opened via JavaScript (the one place this build
+       uses it), which toggles `hidden`/`flex` and an `is-open` class.
+       The `is-open` class is what triggers the staggered fade-up on each
+       .menu-item, purely through CSS (see input.css).
+  ====================================================================== -->
+  <div id="mobile-menu" class="mobile-menu hidden" role="dialog" aria-modal="true" aria-label="Mobile navigation">
+    <div class="flex items-center justify-between px-6 py-5">
+      <a href="#home" class="flex items-center gap-2.5" aria-label="NACOS UNN Alumni Association — go to homepage">
+        <svg width="34" height="34" viewBox="0 0 42 42" aria-hidden="true">
+          <circle cx="21" cy="21" r="20" fill="#D4AF37" stroke="#0B6B3A" stroke-width="1.5" />
+          <path d="M21 14 L30 18.5 L21 23 L12 18.5 Z" fill="#073F22" />
+          <path d="M16 20.5 V26 Q21 28.5 26 26 V20.5" fill="none" stroke="#073F22" stroke-width="1.4" />
+        </svg>
+        <span class="font-display text-base font-semibold text-white">NACOS UNN Alumni</span>
+      </a>
+      <button id="mobile-menu-close" type="button" aria-label="Close menu" class="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white">
+        <i class="fa-solid fa-xmark text-xl"></i>
+      </button>
+    </div>
+
+    <ul class="flex flex-1 flex-col gap-1 px-6 pt-4" role="list">
+      <li class="menu-item delay-1"><a href="#home" class="mobile-link is-active">Home</a></li>
+      <li class="menu-item delay-2"><a href="about.html" class="mobile-link">About</a></li>
+      <li class="menu-item delay-3"><a href="initiatives.html" class="mobile-link">Initiatives</a></li>
+      <li class="menu-item delay-4"><a href="#projects" class="mobile-link">Projects &amp; Impact</a></li>
+      <li class="menu-item delay-5"><a href="#community" class="mobile-link">Community</a></li>
+      <li class="menu-item delay-6"><a href="#latest-news" class="mobile-link">News</a></li>
+      <li class="menu-item delay-7"><a href="#contact" class="mobile-link">Contact</a></li>
+    </ul>
+
+    <div class="menu-item delay-7 flex flex-col gap-3 px-6 py-6">
+      <a href="support.html" class="btn-outline-light w-full">Donate</a>
+      <a href="join.html" class="btn-primary w-full">Join Alumni</a>
+    </div>
+
+    <div class="menu-item delay-7 flex items-center justify-center gap-4 pb-5">
+      <a href="#" class="social-icon-light" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+      <a href="#" class="social-icon-light" aria-label="X (Twitter)"><i class="fa-brands fa-x-twitter"></i></a>
+      <a href="#" class="social-icon-light" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+      <a href="#" class="social-icon-light" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+    </div>
+
+    <p class="menu-item delay-7 border-t border-white/10 px-6 py-4 text-center font-mono text-[11px] text-white/50">
+      © 2026 NACOS UNN Alumni Association
+    </p>
+  </div>
+
+  <!-- =====================================================================
+       HERO SECTION (Page 1: Home)
+       Full-screen (min-h-screen) section with:
+         - a deep-green gradient background
+         - a decorative gold "alumni network constellation" illustration
+           (abstract nodes/lines + a couple of graduation-cap glyphs),
+           standing in for "graduates, technology, students collaborating"
+         - a left-aligned text block with eyebrow, headline, subheading
+           and two CTAs, with a staggered fade-up entrance on page load
+         - a soft bouncing "scroll" cue at the bottom
+       No JS is used anywhere in this section -- all motion is CSS only.
+  ====================================================================== -->
+  <section id="home" class="relative min-h-screen overflow-hidden bg-gradient-to-br from-forest-dark via-forest to-forest-dark">
+
+    <!-- Decorative background illustration: an abstract network of nodes
+         (alumni) connected by thin gold lines, with two nodes drawn as
+         graduation caps. Purely decorative -> aria-hidden. Positioned to
+         bleed across the right/lower portion of the viewport so it never
+         fights with the text block on the left. -->
+    <svg class="absolute inset-0 h-full w-full" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <g stroke="#D4AF37" stroke-width="1.2" fill="none" opacity="0.55">
+        <!-- connecting lines: drawn first so node circles sit on top -->
+        <line x1="760" y1="120" x2="980" y2="90" />
+        <line x1="980" y1="90" x2="1180" y2="160" />
+        <line x1="1180" y1="160" x2="1340" y2="260" />
+        <line x1="760" y1="120" x2="860" y2="260" />
+        <line x1="860" y1="260" x2="1050" y2="320" />
+        <line x1="1050" y1="320" x2="1180" y2="160" />
+        <line x1="1050" y1="320" x2="1250" y2="420" />
+        <line x1="860" y1="260" x2="700" y2="420" />
+        <line x1="700" y1="420" x2="920" y2="480" />
+        <line x1="920" y1="480" x2="1050" y2="320" />
+        <line x1="920" y1="480" x2="1120" y2="560" />
+        <line x1="1120" y1="560" x2="1250" y2="420" />
+        <line x1="1120" y1="560" x2="1320" y2="620" />
+        <line x1="700" y1="420" x2="780" y2="620" />
+        <line x1="920" y1="480" x2="780" y2="620" />
+        <line x1="780" y1="620" x2="1000" y2="700" />
+        <line x1="1120" y1="560" x2="1000" y2="700" />
+        <line x1="1000" y1="700" x2="1200" y2="780" />
+        <line x1="1320" y1="620" x2="1200" y2="780" />
+        <line x1="780" y1="620" x2="560" y2="760" />
+        <line x1="1000" y1="700" x2="560" y2="760" />
+      </g>
+
+      <!-- plain alumni nodes: small circles, each gently pulsing in opacity -->
+      <g fill="#D4AF37">
+        <circle cx="980" cy="90" r="5" class="animate-nodePulse delay-2" />
+        <circle cx="1180" cy="160" r="5" class="animate-nodePulse delay-3" />
+        <circle cx="1340" cy="260" r="5" class="animate-nodePulse" />
+        <circle cx="860" cy="260" r="5" class="animate-nodePulse delay-1" />
+        <circle cx="1050" cy="320" r="5" class="animate-nodePulse delay-4" />
+        <circle cx="1120" cy="560" r="5" class="animate-nodePulse delay-2" />
+        <circle cx="1320" cy="620" r="5" class="animate-nodePulse delay-3" />
+        <circle cx="1000" cy="700" r="5" class="animate-nodePulse" />
+        <circle cx="1200" cy="780" r="5" class="animate-nodePulse delay-1" />
+        <circle cx="560" cy="760" r="4" class="animate-nodePulse delay-4" opacity="0.4" />
+      </g>
+
+      <!-- "collaborating students" nodes: drawn as two overlapping small
+           heads-and-shoulders marks instead of a plain dot -->
+      <g stroke="#D4AF37" stroke-width="1.2" fill="none" opacity="0.8" class="animate-nodePulse delay-2">
+        <circle cx="696" cy="412" r="4" fill="#D4AF37" stroke="none" />
+        <circle cx="710" cy="420" r="4" fill="#D4AF37" stroke="none" />
+        <path d="M688 424 q8 -10 16 0" />
+      </g>
+      <g stroke="#D4AF37" stroke-width="1.2" fill="none" opacity="0.8" class="animate-nodePulse delay-3">
+        <circle cx="776" cy="612" r="4" fill="#D4AF37" stroke="none" />
+        <circle cx="790" cy="620" r="4" fill="#D4AF37" stroke="none" />
+        <path d="M768 624 q8 -10 16 0" />
+      </g>
+
+      <!-- "graduate" nodes: drawn as small graduation-cap glyphs -->
+      <g class="animate-nodePulse delay-1">
+        <path d="M745 112 L760 105 L775 112 L760 119 Z" fill="#D4AF37" />
+        <line x1="775" y1="112" x2="775" y2="124" stroke="#D4AF37" stroke-width="1.2" />
+        <circle cx="775" cy="126" r="1.6" fill="#D4AF37" />
+      </g>
+      <g class="animate-nodePulse delay-4">
+        <path d="M1235 412 L1250 405 L1265 412 L1250 419 Z" fill="#D4AF37" />
+        <line x1="1265" y1="412" x2="1265" y2="424" stroke="#D4AF37" stroke-width="1.2" />
+        <circle cx="1265" cy="426" r="1.6" fill="#D4AF37" />
+      </g>
+    </svg>
+
+    <!-- Legibility scrim: darkens the left side (where the text sits) and
+         fades out toward the right (where the illustration is denser) -->
+    <div class="absolute inset-0 bg-gradient-to-r from-forest-dark/90 via-forest-dark/50 to-transparent"></div>
+
+    <!-- Hero content -->
+    <div class="container-content relative flex min-h-screen flex-col justify-center py-28">
+      <div class="max-w-2xl">
+
+        <!-- Eyebrow: gives quick context on who this site is for -->
+        <p class="eyebrow mb-6 animate-fadeUp">
+          <i class="fa-solid fa-graduation-cap"></i>
+          NACOS UNN Alumni Association
+        </p>
+
+        <!-- Headline, exactly as specified in the brief -->
+        <h1 class="animate-fadeUp delay-1 font-display text-4xl font-semibold leading-[1.15] text-white sm:text-5xl lg:text-6xl">
+          Building Today's Alumni.
+          <span class="text-gold">Empowering Tomorrow's Leaders.</span>
+        </h1>
+
+        <!-- Subheading, exactly as specified in the brief -->
+        <p class="animate-fadeUp delay-2 mt-6 max-w-xl text-base leading-relaxed text-white/80 sm:text-lg">
+          The NACOS UNN Alumni Association exists to unite graduates of the
+          University of Nigeria, Nsukka Computer Science Department in
+          advancing student success, strengthening the department, and
+          creating opportunities that last for generations.
+        </p>
+
+        <!-- CTAs -->
+        <div class="animate-fadeUp delay-3 mt-10 flex flex-wrap items-center gap-4">
+          <a href="join.html" class="btn-primary">
+            Join the Alumni
+            <i class="fa-solid fa-arrow-right text-xs"></i>
+          </a>
+          <a href="#vision" class="btn-outline-light">
+            Read Our Vision
+            <i class="fa-solid fa-compass text-xs"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scroll cue: purely decorative, CSS-animated, no JS -->
+    <div class="scroll-cue animate-scrollCue">
+      <span class="font-mono text-[11px] uppercase tracking-[0.2em]">Scroll</span>
+      <i class="fa-solid fa-chevron-down text-sm"></i>
+    </div>
+  </section>
+
+  <!-- =====================================================================
+       WHY WE EXIST
+       Two columns: a short founding story on the left, four placeholder
+       stat cards on the right. Doubles as the page's "About" anchor,
+       since the nav's About link points to #about.
+  ====================================================================== -->
+  <section id="about" class="container-content py-20 sm:py-28">
+    <div class="grid items-center gap-14 lg:grid-cols-2 lg:gap-20">
+
+      <!-- LEFT: the founding story -->
+      <div>
+        <p class="eyebrow eyebrow--light mb-4">
+          <i class="fa-solid fa-seedling"></i> Why We Exist
+        </p>
+        <h2 class="font-display text-3xl font-semibold leading-tight text-ink sm:text-4xl">
+          A department full of graduates, and a network that never formed.
+        </h2>
+        <div class="mt-6 space-y-4 text-base leading-relaxed text-ink-soft">
+          <p>
+            Every year, another set of graduates walks out of the Computer Science
+            department at UNN and into the world. Some land roles at
+            global tech companies. Others build startups, lead engineering
+            teams, or shape policy. But for years, that success stayed
+            scattered &mdash; thousands of graduates, all moving forward, with
+            almost no thread connecting them back to Nsukka.
+          </p>
+          <p>
+            Meanwhile, the students coming up behind them were navigating
+            the same path largely alone: figuring out internships by
+            guesswork, learning industry tools the department couldn't
+            always afford to teach, and rarely meeting anyone who had
+            already done what they were trying to do.
+          </p>
+          <p>
+            NACOS UNN Alumni exists to close that gap &mdash; to turn a
+            department of disconnected success stories into a single,
+            organized community that funds, mentors, and builds for the
+            students who'll wear the same name next.
+          </p>
+        </div>
+      </div>
+
+      <!-- RIGHT: placeholder stat cards -->
+      <div class="grid grid-cols-2 gap-4 sm:gap-5">
+        <div class="stat-card">
+          <i class="fa-solid fa-users stat-card__icon"></i>
+          <p class="stat-card__value">5,000+</p>
+          <p class="stat-card__label">Alumni Community</p>
+        </div>
+        <div class="stat-card">
+          <i class="fa-solid fa-graduation-cap stat-card__icon"></i>
+          <p class="stat-card__value">1,200+</p>
+          <p class="stat-card__label">Students Supported</p>
+        </div>
+        <div class="stat-card">
+          <i class="fa-solid fa-diagram-project stat-card__icon"></i>
+          <p class="stat-card__value">8</p>
+          <p class="stat-card__label">Planned Projects</p>
+        </div>
+        <div class="stat-card">
+          <i class="fa-solid fa-clock-rotate-left stat-card__icon"></i>
+          <p class="stat-card__value">12+</p>
+          <p class="stat-card__label">Years of Legacy</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =====================================================================
+       OUR MISSION
+       Three cards: Build Community / Support Students / Transform the
+       Department. Same card language as the stat cards, on a tinted
+       section background to separate it visually from "Why We Exist".
+  ====================================================================== -->
+  <section id="mission" class="bg-mist py-20 sm:py-28">
+    <div class="container-content">
+      <div class="mx-auto max-w-2xl text-center">
+        <p class="eyebrow eyebrow--light mx-auto mb-4 justify-center">
+          <i class="fa-solid fa-compass"></i> Our Mission
+        </p>
+        <h2 class="font-display text-3xl font-semibold text-ink sm:text-4xl">
+          Three commitments guide everything we build.
+        </h2>
+      </div>
+
+      <div class="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div class="mission-card">
+          <span class="mission-card__icon"><i class="fa-solid fa-people-group"></i></span>
+          <h3 class="mission-card__title">Build Community</h3>
+          <p class="mission-card__desc">
+            Reconnect graduates across every set, country, and career path
+            into one organized, active alumni network.
+          </p>
+        </div>
+        <div class="mission-card">
+          <span class="mission-card__icon"><i class="fa-solid fa-hand-holding-heart"></i></span>
+          <h3 class="mission-card__title">Support Students</h3>
+          <p class="mission-card__desc">
+            Fund scholarships, mentorship, and career resources for current
+            students who need them most.
+          </p>
+        </div>
+        <div class="mission-card">
+          <span class="mission-card__icon"><i class="fa-solid fa-arrow-trend-up"></i></span>
+          <h3 class="mission-card__title">Transform the Department</h3>
+          <p class="mission-card__desc">
+            Invest directly in the infrastructure, tools, and recognition
+            that keep the department competitive.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =====================================================================
+       VISION TIMELINE
+       A horizontal 6-step journey: Student -> Graduate -> Career Success
+       -> Alumni -> Mentor -> Legacy Builder. Numbered markers are used
+       deliberately here -- this content IS a real chronological sequence,
+       unlike a list of features.
+
+       Scroll animation note: each step fades/slides in using
+       `animation-timeline: view()`, a CSS-only (no JS) scroll-driven
+       animation. It's wrapped in @supports so browsers without support
+       (some Safari/Firefox versions) just show the steps fully visible
+       with no animation, rather than breaking.
+  ====================================================================== -->
+  <section id="journey" class="container-content py-20 sm:py-28">
+    <div class="mx-auto max-w-2xl text-center">
+      <p class="eyebrow eyebrow--light mx-auto mb-4 justify-center">
+        <i class="fa-solid fa-route"></i> The Journey
+      </p>
+      <h2 class="font-display text-3xl font-semibold text-ink sm:text-4xl">
+        Every alumnus walks the same six steps.
+      </h2>
+    </div>
+
+    <div class="timeline">
+      <div class="timeline__line" aria-hidden="true"></div>
+
+      <div class="timeline__step">
+        <span class="timeline__icon"><i class="fa-solid fa-user"></i></span>
+        <p class="timeline__title">1. Student</p>
+        <p class="timeline__desc">Begins the Computer Science journey at UNN.</p>
+      </div>
+      <div class="timeline__step">
+        <span class="timeline__icon"><i class="fa-solid fa-user-graduate"></i></span>
+        <p class="timeline__title">2. Graduate</p>
+        <p class="timeline__desc">Completes the program, ready for the world.</p>
+      </div>
+      <div class="timeline__step">
+        <span class="timeline__icon"><i class="fa-solid fa-briefcase"></i></span>
+        <p class="timeline__title">3. Career Success</p>
+        <p class="timeline__desc">Builds a thriving career in tech.</p>
+      </div>
+      <div class="timeline__step">
+        <span class="timeline__icon"><i class="fa-solid fa-id-badge"></i></span>
+        <p class="timeline__title">4. Alumni</p>
+        <p class="timeline__desc">Joins the NACOS UNN Alumni community.</p>
+      </div>
+      <div class="timeline__step">
+        <span class="timeline__icon"><i class="fa-solid fa-chalkboard-user"></i></span>
+        <p class="timeline__title">5. Mentor</p>
+        <p class="timeline__desc">Gives back by guiding current students.</p>
+      </div>
+      <div class="timeline__step">
+        <span class="timeline__icon"><i class="fa-solid fa-landmark"></i></span>
+        <p class="timeline__title">6. Legacy Builder</p>
+        <p class="timeline__desc">Shapes the department's future for generations.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- =====================================================================
+       FEATURED INITIATIVES PREVIEW
+       Six cards linking into the same initiatives covered by the nav's
+       mega menu. "Networking" and "Academic Excellence" here map to the
+       mega menu's "Community" and "Recognition" entries respectively --
+       same destination anchors, slightly different label for this
+       section's framing.
+  ====================================================================== -->
+  <section id="initiatives" class="bg-mist py-20 sm:py-28">
+    <div class="container-content">
+      <div class="mx-auto max-w-2xl text-center">
+        <p class="eyebrow eyebrow--light mx-auto mb-4 justify-center">
+          <i class="fa-solid fa-layer-group"></i> Featured Initiatives
+        </p>
+        <h2 class="font-display text-3xl font-semibold text-ink sm:text-4xl">
+          Where membership and giving actually go.
+        </h2>
+      </div>
+
+      <div class="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <a href="initiatives.html#infrastructure" class="initiative-card">
+          <span class="initiative-card__icon"><i class="fa-solid fa-building"></i></span>
+          <h3 class="initiative-card__title">Infrastructure</h3>
+          <p class="initiative-card__desc">Modern learning facilities for the department.</p>
+          <span class="initiative-card__link">Learn more <i class="fa-solid fa-arrow-right"></i></span>
+        </a>
+        <a href="initiatives.html#scholarships" class="initiative-card">
+          <span class="initiative-card__icon"><i class="fa-solid fa-graduation-cap"></i></span>
+          <h3 class="initiative-card__title">Scholarships</h3>
+          <p class="initiative-card__desc">Financial support for students who need it most.</p>
+          <span class="initiative-card__link">Learn more <i class="fa-solid fa-arrow-right"></i></span>
+        </a>
+        <a href="initiatives.html#career-coaching" class="initiative-card">
+          <span class="initiative-card__icon"><i class="fa-solid fa-briefcase"></i></span>
+          <h3 class="initiative-card__title">Career Development</h3>
+          <p class="initiative-card__desc">Industry training and certifications.</p>
+          <span class="initiative-card__link">Learn more <i class="fa-solid fa-arrow-right"></i></span>
+        </a>
+        <a href="initiatives.html#mentorship" class="initiative-card">
+          <span class="initiative-card__icon"><i class="fa-solid fa-handshake"></i></span>
+          <h3 class="initiative-card__title">Mentorship</h3>
+          <p class="initiative-card__desc">Connecting students with experienced alumni.</p>
+          <span class="initiative-card__link">Learn more <i class="fa-solid fa-arrow-right"></i></span>
+        </a>
+        <a href="initiatives.html#alumni-engagement" class="initiative-card">
+          <span class="initiative-card__icon"><i class="fa-solid fa-users"></i></span>
+          <h3 class="initiative-card__title">Networking</h3>
+          <p class="initiative-card__desc">Reunions and events that keep the community close.</p>
+          <span class="initiative-card__link">Learn more <i class="fa-solid fa-arrow-right"></i></span>
+        </a>
+        <a href="initiatives.html#recognition" class="initiative-card">
+          <span class="initiative-card__icon"><i class="fa-solid fa-award"></i></span>
+          <h3 class="initiative-card__title">Academic Excellence</h3>
+          <p class="initiative-card__desc">Awards that celebrate outstanding achievement.</p>
+          <span class="initiative-card__link">Learn more <i class="fa-solid fa-arrow-right"></i></span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- =====================================================================
+       FINAL CTA BANNER
+  ====================================================================== -->
+  <section class="container-content py-20 sm:py-28">
+    <div class="cta-banner">
+      <svg class="cta-banner__pattern" viewBox="0 0 800 400" aria-hidden="true">
+        <g stroke="#D4AF37" stroke-width="1" fill="none" opacity="0.4">
+          <line x1="80" y1="60" x2="220" y2="40" /><line x1="220" y1="40" x2="360" y2="100" />
+          <line x1="360" y1="100" x2="540" y2="60" /><line x1="540" y1="60" x2="700" y2="120" />
+          <line x1="80" y1="60" x2="160" y2="200" /><line x1="160" y1="200" x2="360" y2="100" />
+          <line x1="360" y1="100" x2="480" y2="240" /><line x1="540" y1="60" x2="620" y2="220" />
+          <line x1="480" y1="240" x2="620" y2="220" /><line x1="160" y1="200" x2="260" y2="330" />
+          <line x1="480" y1="240" x2="420" y2="350" /><line x1="620" y1="220" x2="700" y2="340" />
+        </g>
+        <g fill="#D4AF37" opacity="0.6">
+          <circle cx="80" cy="60" r="4" /><circle cx="220" cy="40" r="4" /><circle cx="360" cy="100" r="4" />
+          <circle cx="540" cy="60" r="4" /><circle cx="700" cy="120" r="4" /><circle cx="160" cy="200" r="4" />
+          <circle cx="480" cy="240" r="4" /><circle cx="620" cy="220" r="4" /><circle cx="260" cy="330" r="4" />
+          <circle cx="420" cy="350" r="4" /><circle cx="700" cy="340" r="4" />
+        </g>
+      </svg>
+
+      <div class="relative mx-auto max-w-2xl text-center">
+        <h2 class="font-display text-3xl font-semibold text-white sm:text-4xl lg:text-5xl">
+          Together, We Can Build Something Bigger Than Ourselves.
+        </h2>
+        <div class="mt-9 flex flex-wrap items-center justify-center gap-4">
+          <a href="join.html" class="btn-primary">
+            Become a Member
+            <i class="fa-solid fa-arrow-right text-xs"></i>
+          </a>
+          <a href="support.html" class="btn-outline-light">
+            Support Our Mission
+            <i class="fa-solid fa-heart text-xs"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ===================================================================
+       SITE FOOTER
+       Four-column nav + brand + social + legal bottom bar.
+       Matches the dark-green brand palette used across the site.
+  ==================================================================== -->
+  <footer class="bg-gradient-to-b from-forest-dark to-[#041A0E]" aria-label="Site footer">
+
+    <!-- Top: logo + columns + newsletter -->
+    <div class="container-content py-16 sm:py-20">
+      <div class="grid grid-cols-1 gap-12 sm:grid-cols-2 lg:grid-cols-6">
+
+        <!-- Brand column (spans 2 of 6 on large) -->
+        <div class="lg:col-span-2">
+          <a href="index.html" class="inline-flex items-center gap-3 mb-5" aria-label="NACOS UNN Alumni Association — homepage">
+            <div class="w-10 h-10 rounded-full overflow-hidden bg-white/5 flex items-center justify-center">
+              <img class="w-full h-full" src="./images/nacos_logo.jpg" alt="NACOS LOGO">
+            </div>
+            <span class="flex flex-col leading-tight">
+              <span class="font-display text-base font-semibold text-white">NACOS UNN Alumni</span>
+              <span class="font-mono text-[9px] uppercase tracking-[0.14em] text-white/50">Building Generations of Excellence</span>
+            </span>
+          </a>
+
+          <p class="font-body text-sm leading-relaxed text-white/60 max-w-xs">
+            Uniting Computer Science graduates of the University of Nigeria, Nsukka to advance student success and transform the department.
+          </p>
+
+          <!-- Social icons -->
+          <div class="mt-6 flex flex-wrap gap-2">
+            <a href="#" class="flex h-9 w-9 items-center justify-center rounded-full border border-white/15 text-white/60 transition-all duration-200 hover:border-gold hover:text-gold" aria-label="Follow us on X (Twitter)">
+              <i class="fa-brands fa-x-twitter text-sm"></i>
+            </a>
+            <a href="#" class="flex h-9 w-9 items-center justify-center rounded-full border border-white/15 text-white/60 transition-all duration-200 hover:border-gold hover:text-gold" aria-label="Connect on LinkedIn">
+              <i class="fa-brands fa-linkedin-in text-sm"></i>
+            </a>
+            <a href="#" class="flex h-9 w-9 items-center justify-center rounded-full border border-white/15 text-white/60 transition-all duration-200 hover:border-gold hover:text-gold" aria-label="Follow us on Facebook">
+              <i class="fa-brands fa-facebook-f text-sm"></i>
+            </a>
+            <a href="#" class="flex h-9 w-9 items-center justify-center rounded-full border border-white/15 text-white/60 transition-all duration-200 hover:border-gold hover:text-gold" aria-label="Follow us on Instagram">
+              <i class="fa-brands fa-instagram text-sm"></i>
+            </a>
+            <a href="#" class="flex h-9 w-9 items-center justify-center rounded-full border border-white/15 text-white/60 transition-all duration-200 hover:border-gold hover:text-gold" aria-label="Subscribe on YouTube">
+              <i class="fa-brands fa-youtube text-sm"></i>
+            </a>
+            <a href="#" class="flex h-9 w-9 items-center justify-center rounded-full border border-white/15 text-white/60 transition-all duration-200 hover:border-gold hover:text-gold" aria-label="Find us on GitHub">
+              <i class="fa-brands fa-github text-sm"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Nav column 1: About -->
+        <div>
+          <h3 class="font-mono text-[11px] uppercase tracking-[0.18em] text-gold-soft mb-5">About</h3>
+          <ul class="space-y-3" role="list">
+            <li><a href="about.html" class="font-body text-sm text-white/60 transition-colors duration-200 hover:text-white">Our Story</a></li>
+            <li><a href="about.html#vision-mission" class="font-body text-sm text-white/60 transition-colors duration-200 hover:text-white">Vision &amp; Mission</a></li>
+            <li><a href="about.html#leadership" class="font-body text-sm text-white/60 transition-colors duration-200 hover:text-white">Leadership</a></li>
+            <li><a href="index.html#contact" class="font-body text-sm text-white/60 transition-colors duration-200 hover:text-white">Contact</a></li>
+          </ul>
+        </div>
+
+        <!-- Nav column 2: Programs -->
+        <div>
+          <h3 class="font-mono text-[11px] uppercase tracking-[0.18em] text-gold-soft mb-5">Programs</h3>
+          <ul class="space-y-3" role="list">
+            <li><a href="initiatives.html#infrastructure" class="font-body text-sm text-white/60 transition-colors duration-200 hover:text-white">Infrastructure</a></li>
+            <li><a href="initiatives.html#scholarships" class="font-body text-sm text-white/60 transition-colors duration-200 hover:text-white">Scholarships</a></li>
+            <li><a href="initiatives.html#mentorship" class="font-body text-sm text-white/60 transition-colors duration-200 hover:text-white">Mentorship</a></li>
+            <li><a href="initiatives.html#career-coaching" class="font-body text-sm text-white/60 transition-colors duration-200 hover:text-white">Career Development</a></li>
+          </ul>
+        </div>
+
+        <!-- Nav column 3: Community -->
+        <div>
+          <h3 class="font-mono text-[11px] uppercase tracking-[0.18em] text-gold-soft mb-5">Community</h3>
+          <ul class="space-y-3" role="list">
+            <li><a href="join.html" class="font-body text-sm text-white/60 transition-colors duration-200 hover:text-white">Join Alumni</a></li>
+            <li><a href="projects.html#volunteer" class="font-body text-sm text-white/60 transition-colors duration-200 hover:text-white">Volunteer</a></li>
+            <li><a href="index.html#events" class="font-body text-sm text-white/60 transition-colors duration-200 hover:text-white">Events</a></li>
+            <li><a href="index.html#latest-news" class="font-body text-sm text-white/60 transition-colors duration-200 hover:text-white">News</a></li>
+          </ul>
+        </div>
+
+        <!-- Nav column 4: Resources -->
+        <div>
+          <h3 class="font-mono text-[11px] uppercase tracking-[0.18em] text-gold-soft mb-5">Resources</h3>
+          <ul class="space-y-3" role="list">
+            <li><a href="projects.html#financial-transparency" class="font-body text-sm text-white/60 transition-colors duration-200 hover:text-white">Annual Reports</a></li>
+            <li><a href="projects.html#financial-transparency" class="font-body text-sm text-white/60 transition-colors duration-200 hover:text-white">Financial Transparency</a></li>
+            <li><a href="support.html#faq" class="font-body text-sm text-white/60 transition-colors duration-200 hover:text-white">FAQs</a></li>
+            <li><a href="#privacy" class="font-body text-sm text-white/60 transition-colors duration-200 hover:text-white">Privacy Policy</a></li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Divider -->
+    <div class="border-t border-white/10"></div>
+
+    <!-- Bottom bar -->
+    <div class="container-content py-6">
+      <div class="flex flex-col items-center gap-3 text-center sm:flex-row sm:justify-between sm:text-left">
+        <p class="font-body text-xs text-white/40">
+          © 2026 NACOS UNN Alumni Association. All Rights Reserved.
+        </p>
+        <p class="font-mono text-[10px] uppercase tracking-[0.14em] text-white/30">
+          Built by alumni, for alumni — University of Nigeria, Nsukka
+        </p>
+      </div>
+    </div>
+
+  </footer>
+
+
+
+  <!-- =====================================================================
+       JAVASCRIPT — MOBILE MENU ONLY
+       This is the single JS-driven interaction in the build, as agreed.
+       Everything else (banner dismiss, mega menu, dropdowns, search
+       modal) runs on pure CSS. This script just opens/closes the
+       full-screen mobile menu, manages aria-expanded, traps focus on
+       the close button while open, and lets Escape close it.
+  ====================================================================== -->
+  <script>
+    const menuBtn = document.getElementById('mobile-menu-btn');
+    const closeBtn = document.getElementById('mobile-menu-close');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    function openMobileMenu() {
+      mobileMenu.classList.remove('hidden');
+      mobileMenu.classList.add('flex', 'is-open');
+      document.body.classList.add('overflow-hidden'); // stop background scroll while open
+      menuBtn.setAttribute('aria-expanded', 'true');
+      closeBtn.focus(); // move keyboard focus into the menu
+    }
+
+    function closeMobileMenu() {
+      mobileMenu.classList.add('hidden');
+      mobileMenu.classList.remove('flex', 'is-open');
+      document.body.classList.remove('overflow-hidden');
+      menuBtn.setAttribute('aria-expanded', 'false');
+      menuBtn.focus(); // return keyboard focus to the button that opened it
+    }
+
+    menuBtn.addEventListener('click', openMobileMenu);
+    closeBtn.addEventListener('click', closeMobileMenu);
+
+    // Close automatically once a link inside the menu is clicked
+    mobileMenu.querySelectorAll('a').forEach((link) => {
+      link.addEventListener('click', closeMobileMenu);
+    });
+
+    // Let keyboard users close the menu with Escape
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !mobileMenu.classList.contains('hidden')) {
+        closeMobileMenu();
+      }
+    });
+  </script>
+
+</body>
+</html>

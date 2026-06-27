@@ -1,0 +1,1826 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Projects &amp; Impact — NACOS UNN Alumni Association</title>
+  <meta name="description" content="See how NACOS UNN Alumni contributions are turned into real, lasting infrastructure, scholarships, and opportunities for Computer Science students at UNN." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link rel="stylesheet" href="./css/output.css">
+
+  <style>
+    /* ── Progress bar fill animations (pure CSS, triggered on scroll) ── */
+    @keyframes fillBar {
+      from { width: 0%; }
+      to   { width: var(--fill); }
+    }
+    .progress-bar {
+      animation: fillBar 1.4s cubic-bezier(.22,.68,0,1.2) both;
+      animation-play-state: paused;
+    }
+    .progress-bar.animate {
+      animation-play-state: running;
+    }
+
+    /* ── Animated counter ── */
+    @keyframes countUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .counter-val {
+      animation: countUp 0.7s ease-out both;
+    }
+
+    /* ── Timeline connector line ── */
+    .impact-timeline::before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 0; bottom: 0;
+      width: 2px;
+      background: linear-gradient(to bottom, #0B6B3A, #D4AF37, #0B6B3A);
+      transform: translateX(-50%);
+    }
+
+    /* ── Filter button active state ── */
+    .filter-btn.active {
+      background-color: #0B6B3A;
+      color: white;
+      border-color: #0B6B3A;
+    }
+
+    /* ── Project card hover lift ── */
+    .project-card {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .project-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 40px rgba(32,36,31,0.12);
+    }
+
+    /* ── Pie chart placeholder ── */
+    .donut-ring {
+      transform: rotate(-90deg);
+      transform-origin: center;
+    }
+
+    /* ── Campus map building highlight ── */
+    .map-building {
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+    .map-building:hover {
+      opacity: 0.85;
+    }
+    .map-tooltip {
+      display: none;
+      position: absolute;
+      z-index: 10;
+    }
+    .map-building:hover + .map-tooltip,
+    .map-building:focus + .map-tooltip {
+      display: block;
+    }
+
+    /* ── Scroll-reveal for sections ── */
+    @supports (animation-timeline: view()) {
+      .reveal-on-scroll {
+        opacity: 0;
+        transform: translateY(20px);
+        animation: timelineReveal 0.7s ease-out both;
+        animation-timeline: view();
+        animation-range: entry 0% cover 30%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ===================================================================
+       ANNOUNCEMENT BAR
+  ==================================================================== -->
+  <input type="checkbox" id="announcement-dismiss" class="announcement-dismiss sr-only" />
+  <div class="announcement-bar">
+    <div class="container-content flex items-center justify-center gap-3 py-2.5 text-center">
+      <p class="font-body text-xs sm:text-sm font-medium text-forest-dark">
+        🚀 Smart Computer Lab Campaign: 68% funded — <a href="#featured-projects" class="underline font-semibold">Support now</a>
+      </p>
+      <label for="announcement-dismiss" class="announcement-close" aria-label="Dismiss announcement">
+        <i class="fa-solid fa-xmark"></i>
+      </label>
+    </div>
+  </div>
+
+  <!-- ===================================================================
+       PRIMARY NAVIGATION
+  ==================================================================== -->
+  <header class="sticky top-0 z-50">
+    <nav aria-label="Primary" class="nav-bar">
+      <div class="container-content flex items-center justify-between py-3.5 lg:py-4">
+
+        <a href="index.html" class="flex items-center gap-3" aria-label="NACOS UNN Alumni Association — go to homepage">
+          <div class="w-10 h-10 rounded-full overflow-hidden bg-white/5 flex items-center justify-center">
+              <img class="w-full h-full" src="./images/nacos_logo.jpg" alt="NACOS LOGO">
+          </div>
+          <span class="flex flex-col leading-tight">
+            <span class="font-display text-base font-semibold text-ink sm:text-lg">NACOS UNN Alumni</span>
+            <span class="font-mono text-[9px] uppercase tracking-[0.14em] text-ink-soft sm:text-[10px]">Building Generations of Excellence</span>
+          </span>
+        </a>
+
+        <ul class="hidden items-center gap-7 lg:flex" role="list">
+          <li><a href="index.html" class="nav-link">Home</a></li>
+          <li><a href="about.html" class="nav-link">About</a></li>
+
+          <li class="group relative">
+            <button type="button" class="nav-link nav-link--trigger" aria-haspopup="true" aria-expanded="false">
+              Initiatives
+              <i class="fa-solid fa-chevron-down text-[9px] transition-transform duration-300 group-hover:rotate-180 group-focus-within:rotate-180"></i>
+            </button>
+            <div class="mega-menu" role="menu">
+              <div class="mega-menu__grid">
+                <a href="initiatives.html#infrastructure" class="mega-card" role="menuitem">
+                  <span class="mega-card__icon"><i class="fa-solid fa-building"></i></span>
+                  <span class="mega-card__title">Infrastructure</span>
+                  <span class="mega-card__desc">Modern learning facilities.</span>
+                </a>
+                <a href="initiatives.html#scholarships" class="mega-card" role="menuitem">
+                  <span class="mega-card__icon"><i class="fa-solid fa-graduation-cap"></i></span>
+                  <span class="mega-card__title">Scholarships</span>
+                  <span class="mega-card__desc">Financial support for students.</span>
+                </a>
+                <a href="initiatives.html#career-coaching" class="mega-card" role="menuitem">
+                  <span class="mega-card__icon"><i class="fa-solid fa-briefcase"></i></span>
+                  <span class="mega-card__title">Career Development</span>
+                  <span class="mega-card__desc">Industry training and certifications.</span>
+                </a>
+                <a href="initiatives.html#mentorship" class="mega-card" role="menuitem">
+                  <span class="mega-card__icon"><i class="fa-solid fa-handshake"></i></span>
+                  <span class="mega-card__title">Mentorship</span>
+                  <span class="mega-card__desc">Connect students with experienced alumni.</span>
+                </a>
+                <a href="initiatives.html#alumni-engagement" class="mega-card" role="menuitem">
+                  <span class="mega-card__icon"><i class="fa-solid fa-users"></i></span>
+                  <span class="mega-card__title">Community</span>
+                  <span class="mega-card__desc">Networking events and reunions.</span>
+                </a>
+                <a href="initiatives.html#recognition" class="mega-card" role="menuitem">
+                  <span class="mega-card__icon"><i class="fa-solid fa-award"></i></span>
+                  <span class="mega-card__title">Recognition</span>
+                  <span class="mega-card__desc">Awards and academic excellence.</span>
+                </a>
+              </div>
+            </div>
+          </li>
+
+          <li><a href="projects.html" class="nav-link is-active" aria-current="page">Projects &amp; Impact</a></li>
+
+          <li class="group relative">
+            <button type="button" class="nav-link nav-link--trigger" aria-haspopup="true" aria-expanded="false">
+              Community
+              <i class="fa-solid fa-chevron-down text-[9px] transition-transform duration-300 group-hover:rotate-180 group-focus-within:rotate-180"></i>
+            </button>
+            <div class="dropdown-panel" role="menu">
+              <span class="dropdown-item dropdown-item--disabled" role="menuitem" aria-disabled="true">
+                Alumni Directory <span class="soon-tag">Coming Soon</span>
+              </span>
+              <a href="index.html#mentorship" class="dropdown-item" role="menuitem">Mentorship</a>
+              <a href="index.html#events" class="dropdown-item" role="menuitem">Events</a>
+              <a href="index.html#x-spaces" class="dropdown-item" role="menuitem">X Spaces</a>
+              <a href="index.html#volunteer" class="dropdown-item" role="menuitem">Volunteer</a>
+              <span class="dropdown-item dropdown-item--disabled" role="menuitem" aria-disabled="true">
+                Regional Chapters <span class="soon-tag">Coming Soon</span>
+              </span>
+            </div>
+          </li>
+
+          <li class="group relative">
+            <button type="button" class="nav-link nav-link--trigger" aria-haspopup="true" aria-expanded="false">
+              News
+              <i class="fa-solid fa-chevron-down text-[9px] transition-transform duration-300 group-hover:rotate-180 group-focus-within:rotate-180"></i>
+            </button>
+            <div class="dropdown-panel" role="menu">
+              <a href="index.html#latest-news" class="dropdown-item" role="menuitem">Latest News</a>
+              <a href="index.html#success-stories" class="dropdown-item" role="menuitem">Success Stories</a>
+              <a href="index.html#project-updates" class="dropdown-item" role="menuitem">Project Updates</a>
+              <a href="index.html#annual-reports" class="dropdown-item" role="menuitem">Annual Reports</a>
+            </div>
+          </li>
+
+          <li><a href="index.html#contact" class="nav-link">Contact</a></li>
+        </ul>
+
+        <div class="hidden items-center gap-2 lg:flex">
+          <label for="search-toggle" class="search-icon-btn" aria-label="Open search" role="button" tabindex="0">
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </label>
+          <a href="support.html" class="btn-outline-dark">Donate</a>
+          <a href="join.html" class="btn-fill-green">Join Alumni</a>
+        </div>
+
+        <div class="flex items-center gap-3 lg:hidden">
+          <label for="search-toggle" class="search-icon-btn" aria-label="Open search" role="button" tabindex="0">
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </label>
+          <button id="mobile-menu-btn" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu" class="search-icon-btn">
+            <i class="fa-solid fa-bars text-lg"></i>
+          </button>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Search modal -->
+  <input type="checkbox" id="search-toggle" class="search-toggle sr-only" />
+  <div class="search-modal-backdrop">
+    <div class="search-modal" role="dialog" aria-modal="true" aria-label="Search the site">
+      <div class="flex items-center justify-between gap-4 border-b border-ink/10 p-5">
+        <label for="search-toggle" class="flex flex-1 items-center gap-3 cursor-text">
+          <i class="fa-solid fa-magnifying-glass text-ink-soft"></i>
+          <input type="search" placeholder="Search projects, news, alumni, events…" class="search-modal__input" />
+        </label>
+        <label for="search-toggle" class="search-modal__close" aria-label="Close search">
+          <i class="fa-solid fa-xmark"></i>
+        </label>
+      </div>
+      <div class="p-5">
+        <p class="mb-3 font-mono text-[11px] uppercase tracking-[0.16em] text-ink-soft">Browse by category</p>
+        <div class="flex flex-wrap gap-2">
+          <a href="#featured-projects" class="search-suggestion">Projects</a>
+          <a href="#financial-transparency" class="search-suggestion">Finances</a>
+          <a href="#success-stories" class="search-suggestion">Stories</a>
+          <a href="#upcoming-projects" class="search-suggestion">Upcoming</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile menu -->
+  <div id="mobile-menu" class="mobile-menu hidden" role="dialog" aria-modal="true" aria-label="Mobile navigation">
+    <div class="flex items-center justify-between px-6 py-5">
+      <a href="index.html" class="flex items-center gap-2.5" aria-label="NACOS UNN Alumni Association — go to homepage">
+        <svg width="34" height="34" viewBox="0 0 42 42" aria-hidden="true">
+          <circle cx="21" cy="21" r="20" fill="#D4AF37" stroke="#0B6B3A" stroke-width="1.5" />
+          <path d="M21 14 L30 18.5 L21 23 L12 18.5 Z" fill="#073F22" />
+          <path d="M16 20.5 V26 Q21 28.5 26 26 V20.5" fill="none" stroke="#073F22" stroke-width="1.4" />
+        </svg>
+        <span class="font-display text-base font-semibold text-white">NACOS UNN Alumni</span>
+      </a>
+      <button id="mobile-menu-close" type="button" aria-label="Close menu" class="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white">
+        <i class="fa-solid fa-xmark text-xl"></i>
+      </button>
+    </div>
+    <ul class="flex flex-1 flex-col gap-1 px-6 pt-4" role="list">
+      <li class="menu-item delay-1"><a href="index.html" class="mobile-link">Home</a></li>
+      <li class="menu-item delay-2"><a href="about.html" class="mobile-link">About</a></li>
+      <li class="menu-item delay-3"><a href="initiatives.html" class="mobile-link">Initiatives</a></li>
+      <li class="menu-item delay-4"><a href="projects.html" class="mobile-link is-active">Projects &amp; Impact</a></li>
+      <li class="menu-item delay-5"><a href="index.html#community" class="mobile-link">Community</a></li>
+      <li class="menu-item delay-6"><a href="index.html#latest-news" class="mobile-link">News</a></li>
+      <li class="menu-item delay-7"><a href="index.html#contact" class="mobile-link">Contact</a></li>
+    </ul>
+    <div class="menu-item delay-7 flex flex-col gap-3 px-6 py-6">
+      <a href="support.html" class="btn-outline-light w-full">Donate</a>
+      <a href="join.html" class="btn-primary w-full">Join Alumni</a>
+    </div>
+    <div class="menu-item delay-7 flex items-center justify-center gap-4 pb-5">
+      <a href="#" class="social-icon-light" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+      <a href="#" class="social-icon-light" aria-label="X (Twitter)"><i class="fa-brands fa-x-twitter"></i></a>
+      <a href="#" class="social-icon-light" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+      <a href="#" class="social-icon-light" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+    </div>
+    <p class="menu-item delay-7 border-t border-white/10 px-6 py-4 text-center font-mono text-[11px] text-white/50">
+      © 2026 NACOS UNN Alumni Association
+    </p>
+  </div>
+
+
+  <!-- ===================================================================
+       HERO — "Turning Alumni Contributions into Lasting Impact"
+  ==================================================================== -->
+  <section id="hero" class="relative overflow-hidden bg-gradient-to-br from-forest-dark via-forest to-forest-dark py-24 sm:py-32">
+    <!-- Constellation background -->
+    <svg class="absolute inset-0 h-full w-full" viewBox="0 0 1440 560" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <g stroke="#D4AF37" stroke-width="1" fill="none" opacity="0.35">
+        <line x1="100" y1="80" x2="280" y2="50"/><line x1="280" y1="50" x2="480" y2="120"/>
+        <line x1="480" y1="120" x2="720" y2="60"/><line x1="720" y1="60" x2="960" y2="140"/>
+        <line x1="960" y1="140" x2="1180" y2="80"/><line x1="1180" y1="80" x2="1380" y2="160"/>
+        <line x1="100" y1="80" x2="200" y2="260"/><line x1="200" y1="260" x2="480" y2="120"/>
+        <line x1="480" y1="120" x2="600" y2="300"/><line x1="720" y1="60" x2="820" y2="280"/>
+        <line x1="820" y1="280" x2="960" y2="140"/><line x1="960" y1="140" x2="1060" y2="340"/>
+        <line x1="1180" y1="80" x2="1280" y2="300"/><line x1="200" y1="260" x2="320" y2="430"/>
+        <line x1="600" y1="300" x2="700" y2="460"/><line x1="820" y1="280" x2="900" y2="460"/>
+        <line x1="1060" y1="340" x2="1160" y2="500"/>
+      </g>
+      <g fill="#D4AF37" opacity="0.6">
+        <circle cx="100" cy="80" r="4"/><circle cx="280" cy="50" r="4"/><circle cx="480" cy="120" r="4"/>
+        <circle cx="720" cy="60" r="4"/><circle cx="960" cy="140" r="4"/><circle cx="1180" cy="80" r="4"/>
+        <circle cx="200" cy="260" r="3"/><circle cx="600" cy="300" r="3"/><circle cx="820" cy="280" r="3"/>
+        <circle cx="1060" cy="340" r="3"/><circle cx="1280" cy="300" r="3"/>
+        <circle cx="320" cy="430" r="3"/><circle cx="700" cy="460" r="3"/><circle cx="900" cy="460" r="3"/>
+      </g>
+    </svg>
+    <div class="absolute inset-0 bg-gradient-to-r from-forest-dark/80 via-forest-dark/50 to-transparent"></div>
+
+    <div class="container-content relative">
+      <div class="animate-fadeUp delay-1">
+        <p class="eyebrow mb-4">
+          <a href="index.html" class="hover:text-gold">Home</a>
+          <i class="fa-solid fa-chevron-right text-[8px]"></i> Projects &amp; Impact
+        </p>
+      </div>
+
+      <h1 class="animate-fadeUp delay-2 max-w-3xl font-display text-4xl font-semibold text-white sm:text-5xl lg:text-6xl leading-tight">
+        Turning Alumni Contributions into Lasting Impact
+      </h1>
+      <p class="animate-fadeUp delay-3 mt-6 max-w-2xl text-base leading-relaxed text-white/80 sm:text-lg">
+        Every contribution is transformed into meaningful projects that improve student learning, strengthen the department, and create opportunities for future generations.
+      </p>
+
+      <!-- Hero impact stats -->
+      <div class="animate-fadeUp delay-4 mt-10 grid grid-cols-1 gap-4 sm:grid-cols-3 sm:max-w-2xl">
+        <div class="rounded-2xl border border-white/20 bg-white/10 p-5 backdrop-blur-sm text-center">
+          <p class="font-display text-4xl font-semibold text-gold">12</p>
+          <p class="mt-1 font-mono text-xs uppercase tracking-[0.14em] text-white/70">Total Projects</p>
+        </div>
+        <div class="rounded-2xl border border-white/20 bg-white/10 p-5 backdrop-blur-sm text-center">
+          <p class="font-display text-4xl font-semibold text-gold">₦48M</p>
+          <p class="mt-1 font-mono text-xs uppercase tracking-[0.14em] text-white/70">Funds Raised</p>
+        </div>
+        <div class="rounded-2xl border border-white/20 bg-white/10 p-5 backdrop-blur-sm text-center">
+          <p class="font-display text-4xl font-semibold text-gold">840+</p>
+          <p class="mt-1 font-mono text-xs uppercase tracking-[0.14em] text-white/70">Students Impacted</p>
+        </div>
+      </div>
+
+      <div class="animate-fadeUp delay-5 mt-9 flex flex-wrap gap-4">
+        <a href="#featured-projects" class="btn-primary">
+          Support a Project <i class="fa-solid fa-arrow-right text-xs"></i>
+        </a>
+        <a href="#financial-transparency" class="btn-outline-light">
+          View Financial Transparency <i class="fa-solid fa-chart-pie text-xs"></i>
+        </a>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ===================================================================
+       PROJECT CATEGORIES — Filter Tabs
+  ==================================================================== -->
+  <section class="border-b border-ink/8 bg-white py-6">
+    <div class="container-content">
+      <div class="flex flex-wrap items-center gap-2" id="category-filters" role="tablist" aria-label="Filter projects by category">
+        <button class="filter-btn active rounded-full border border-ink/15 px-4 py-2 font-mono text-xs uppercase tracking-[0.12em] text-ink-soft transition-all duration-200 hover:border-forest hover:text-forest" data-category="all" role="tab" aria-selected="true">All</button>
+        <button class="filter-btn rounded-full border border-ink/15 px-4 py-2 font-mono text-xs uppercase tracking-[0.12em] text-ink-soft transition-all duration-200 hover:border-forest hover:text-forest" data-category="infrastructure" role="tab">Infrastructure</button>
+        <button class="filter-btn rounded-full border border-ink/15 px-4 py-2 font-mono text-xs uppercase tracking-[0.12em] text-ink-soft transition-all duration-200 hover:border-forest hover:text-forest" data-category="scholarships" role="tab">Scholarships</button>
+        <button class="filter-btn rounded-full border border-ink/15 px-4 py-2 font-mono text-xs uppercase tracking-[0.12em] text-ink-soft transition-all duration-200 hover:border-forest hover:text-forest" data-category="training" role="tab">Training</button>
+        <button class="filter-btn rounded-full border border-ink/15 px-4 py-2 font-mono text-xs uppercase tracking-[0.12em] text-ink-soft transition-all duration-200 hover:border-forest hover:text-forest" data-category="research" role="tab">Research</button>
+        <button class="filter-btn rounded-full border border-ink/15 px-4 py-2 font-mono text-xs uppercase tracking-[0.12em] text-ink-soft transition-all duration-200 hover:border-forest hover:text-forest" data-category="events" role="tab">Events</button>
+        <button class="filter-btn rounded-full border border-ink/15 px-4 py-2 font-mono text-xs uppercase tracking-[0.12em] text-ink-soft transition-all duration-200 hover:border-forest hover:text-forest" data-category="community" role="tab">Community</button>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ===================================================================
+       FEATURED PROJECTS
+  ==================================================================== -->
+  <section id="featured-projects" class="container-content py-20 sm:py-28">
+    <div class="mx-auto max-w-2xl text-center">
+      <p class="eyebrow eyebrow--light mx-auto mb-4 justify-center">
+        <i class="fa-solid fa-star"></i> Featured Projects
+      </p>
+      <h2 class="font-display text-3xl font-semibold text-ink sm:text-4xl">
+        Where every naira goes.
+      </h2>
+      <p class="mt-4 font-body text-sm leading-relaxed text-ink-soft sm:text-base">
+        Six signature initiatives defining what NACOS UNN Alumni stands for — backed by real funding and real timelines.
+      </p>
+    </div>
+
+    <div class="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3" id="projects-grid">
+
+      <!-- Card 1: Smart Computer Laboratory -->
+      <div class="project-card group rounded-3xl border border-ink/8 bg-white overflow-hidden" data-category="infrastructure">
+        <div class="relative h-44 bg-gradient-to-br from-forest-dark to-forest flex items-center justify-center overflow-hidden">
+          <svg viewBox="0 0 280 160" class="h-full w-full" aria-hidden="true">
+            <rect x="30" y="30" width="220" height="110" rx="8" fill="none" stroke="#D4AF37" stroke-width="2" opacity="0.6"/>
+            <rect x="50" y="45" width="80" height="60" rx="4" fill="#D4AF37" opacity="0.15"/>
+            <rect x="55" y="50" width="70" height="50" rx="3" fill="none" stroke="#D4AF37" stroke-width="1.5"/>
+            <line x1="55" y1="60" x2="125" y2="60" stroke="#D4AF37" stroke-width="1" opacity="0.5"/>
+            <rect x="60" y="65" width="30" height="4" rx="2" fill="#D4AF37" opacity="0.4"/>
+            <rect x="60" y="73" width="50" height="4" rx="2" fill="#D4AF37" opacity="0.4"/>
+            <rect x="60" y="81" width="40" height="4" rx="2" fill="#D4AF37" opacity="0.4"/>
+            <rect x="150" y="45" width="80" height="60" rx="4" fill="#D4AF37" opacity="0.15"/>
+            <rect x="155" y="50" width="70" height="50" rx="3" fill="none" stroke="#D4AF37" stroke-width="1.5"/>
+            <line x1="155" y1="60" x2="225" y2="60" stroke="#D4AF37" stroke-width="1" opacity="0.5"/>
+            <rect x="160" y="65" width="50" height="4" rx="2" fill="#D4AF37" opacity="0.4"/>
+            <rect x="160" y="73" width="30" height="4" rx="2" fill="#D4AF37" opacity="0.4"/>
+            <rect x="160" y="81" width="45" height="4" rx="2" fill="#D4AF37" opacity="0.4"/>
+            <rect x="80" y="120" width="120" height="6" rx="3" fill="#D4AF37" opacity="0.3"/>
+            <circle cx="140" cy="130" r="4" fill="#D4AF37" opacity="0.5"/>
+          </svg>
+          <span class="absolute top-3 right-3 rounded-full bg-amber-400/20 border border-amber-400/40 px-3 py-1 font-mono text-[10px] uppercase tracking-wide text-amber-300">
+            <i class="fa-solid fa-circle-half-stroke mr-1"></i> Ongoing
+          </span>
+        </div>
+        <div class="p-6">
+          <div class="mb-1 font-mono text-[10px] uppercase tracking-[0.14em] text-forest">Infrastructure</div>
+          <h3 class="font-display text-xl font-semibold text-ink">Smart Computer Laboratory</h3>
+          <p class="mt-2 font-body text-sm leading-relaxed text-ink-soft">A 60-workstation smart lab with high-speed internet, modern software, and a collaborative design — the backbone of future graduates.</p>
+          <div class="mt-4">
+            <div class="mb-1.5 flex items-center justify-between">
+              <span class="font-body text-xs text-ink-soft">₦32.6M raised of ₦48M</span>
+              <span class="font-mono text-xs font-semibold text-forest">68%</span>
+            </div>
+            <div class="h-2 w-full overflow-hidden rounded-full bg-ink/8">
+              <div class="progress-bar h-full rounded-full bg-gradient-to-r from-forest to-forest-light" style="--fill: 68%"></div>
+            </div>
+          </div>
+          <div class="mt-4 flex items-center justify-between">
+            <span class="font-body text-xs text-ink-soft"><i class="fa-regular fa-calendar mr-1 text-forest"></i> Dec 2026</span>
+            <a href="#" class="inline-flex items-center gap-1.5 font-body text-sm font-semibold text-forest transition-all group-hover:gap-2.5">
+              Learn More <i class="fa-solid fa-arrow-right text-xs"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 2: Innovation Hub -->
+      <div class="project-card group rounded-3xl border border-ink/8 bg-white overflow-hidden" data-category="infrastructure">
+        <div class="relative h-44 bg-gradient-to-br from-gold-deep to-gold flex items-center justify-center overflow-hidden">
+          <svg viewBox="0 0 280 160" class="h-full w-full" aria-hidden="true">
+            <rect x="60" y="30" width="160" height="110" rx="6" fill="none" stroke="#073F22" stroke-width="2" opacity="0.5"/>
+            <rect x="75" y="55" width="50" height="55" rx="3" fill="#073F22" opacity="0.15"/>
+            <rect x="155" y="55" width="50" height="55" rx="3" fill="#073F22" opacity="0.15"/>
+            <rect x="105" y="40" width="70" height="70" rx="4" fill="#073F22" opacity="0.25"/>
+            <circle cx="140" cy="60" r="14" fill="none" stroke="#073F22" stroke-width="2" opacity="0.6"/>
+            <path d="M134 60 L138 64 L148 54" stroke="#073F22" stroke-width="2.5" fill="none" opacity="0.7"/>
+            <path d="M100 110 L180 110" stroke="#073F22" stroke-width="1.5" opacity="0.3"/>
+            <circle cx="110" cy="125" r="5" fill="#073F22" opacity="0.3"/>
+            <circle cx="140" cy="125" r="5" fill="#073F22" opacity="0.3"/>
+            <circle cx="170" cy="125" r="5" fill="#073F22" opacity="0.3"/>
+          </svg>
+          <span class="absolute top-3 right-3 rounded-full bg-forest/20 border border-forest/40 px-3 py-1 font-mono text-[10px] uppercase tracking-wide text-forest-dark">
+            <i class="fa-solid fa-circle-half-stroke mr-1"></i> Ongoing
+          </span>
+        </div>
+        <div class="p-6">
+          <div class="mb-1 font-mono text-[10px] uppercase tracking-[0.14em] text-forest">Infrastructure</div>
+          <h3 class="font-display text-xl font-semibold text-ink">Innovation Hub</h3>
+          <p class="mt-2 font-body text-sm leading-relaxed text-ink-soft">A co-working and incubation space where students build real products. Equipped with maker tools, mentorship pods, and high-speed connectivity.</p>
+          <div class="mt-4">
+            <div class="mb-1.5 flex items-center justify-between">
+              <span class="font-body text-xs text-ink-soft">₦11.2M raised of ₦20M</span>
+              <span class="font-mono text-xs font-semibold text-forest">56%</span>
+            </div>
+            <div class="h-2 w-full overflow-hidden rounded-full bg-ink/8">
+              <div class="progress-bar h-full rounded-full bg-gradient-to-r from-gold-deep to-gold" style="--fill: 56%"></div>
+            </div>
+          </div>
+          <div class="mt-4 flex items-center justify-between">
+            <span class="font-body text-xs text-ink-soft"><i class="fa-regular fa-calendar mr-1 text-forest"></i> Mar 2027</span>
+            <a href="#" class="inline-flex items-center gap-1.5 font-body text-sm font-semibold text-forest transition-all group-hover:gap-2.5">
+              Learn More <i class="fa-solid fa-arrow-right text-xs"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 3: Student Scholarship Fund -->
+      <div class="project-card group rounded-3xl border border-ink/8 bg-white overflow-hidden" data-category="scholarships">
+        <div class="relative h-44 bg-gradient-to-br from-forest via-forest-dark to-forest-dark flex items-center justify-center overflow-hidden">
+          <svg viewBox="0 0 280 160" class="h-full w-full" aria-hidden="true">
+            <path d="M140 30 L175 50 L175 75 Q175 105 140 120 Q105 105 105 75 L105 50 Z" fill="none" stroke="#D4AF37" stroke-width="2" opacity="0.7"/>
+            <path d="M140 50 L155 58 V73 Q155 90 140 98 Q125 90 125 73 V58 Z" fill="#D4AF37" opacity="0.2"/>
+            <path d="M130 73 L136 79 L152 63" stroke="#D4AF37" stroke-width="2.5" fill="none"/>
+            <circle cx="100" cy="130" r="12" fill="#D4AF37" opacity="0.15"/>
+            <circle cx="140" cy="135" r="12" fill="#D4AF37" opacity="0.15"/>
+            <circle cx="180" cy="130" r="12" fill="#D4AF37" opacity="0.15"/>
+            <path d="M95 130 L100 125 M100 125 L105 130" fill="none" stroke="#D4AF37" stroke-width="1.5" opacity="0.5"/>
+            <path d="M135 135 L140 130 M140 130 L145 135" fill="none" stroke="#D4AF37" stroke-width="1.5" opacity="0.5"/>
+            <path d="M175 130 L180 125 M180 125 L185 130" fill="none" stroke="#D4AF37" stroke-width="1.5" opacity="0.5"/>
+          </svg>
+          <span class="absolute top-3 right-3 rounded-full bg-emerald-400/20 border border-emerald-400/40 px-3 py-1 font-mono text-[10px] uppercase tracking-wide text-emerald-300">
+            <i class="fa-solid fa-rotate mr-1"></i> Rolling
+          </span>
+        </div>
+        <div class="p-6">
+          <div class="mb-1 font-mono text-[10px] uppercase tracking-[0.14em] text-forest">Scholarships</div>
+          <h3 class="font-display text-xl font-semibold text-ink">Student Scholarship Fund</h3>
+          <p class="mt-2 font-body text-sm leading-relaxed text-ink-soft">Providing tuition relief and stipends to academically strong students from low-income backgrounds. 24 awards disbursed this year alone.</p>
+          <div class="mt-4">
+            <div class="mb-1.5 flex items-center justify-between">
+              <span class="font-body text-xs text-ink-soft">₦4.8M raised of ₦6M</span>
+              <span class="font-mono text-xs font-semibold text-forest">80%</span>
+            </div>
+            <div class="h-2 w-full overflow-hidden rounded-full bg-ink/8">
+              <div class="progress-bar h-full rounded-full bg-gradient-to-r from-emerald-500 to-forest-light" style="--fill: 80%"></div>
+            </div>
+          </div>
+          <div class="mt-4 flex items-center justify-between">
+            <span class="font-body text-xs text-ink-soft"><i class="fa-regular fa-calendar mr-1 text-forest"></i> Annual</span>
+            <a href="#" class="inline-flex items-center gap-1.5 font-body text-sm font-semibold text-forest transition-all group-hover:gap-2.5">
+              Learn More <i class="fa-solid fa-arrow-right text-xs"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 4: Career Accelerator Program -->
+      <div class="project-card group rounded-3xl border border-ink/8 bg-white overflow-hidden" data-category="training">
+        <div class="relative h-44 bg-gradient-to-br from-ink to-ink-soft flex items-center justify-center overflow-hidden">
+          <svg viewBox="0 0 280 160" class="h-full w-full" aria-hidden="true">
+            <rect x="40" y="50" width="200" height="80" rx="6" fill="none" stroke="#D4AF37" stroke-width="1.5" opacity="0.5"/>
+            <line x1="40" y1="70" x2="240" y2="70" stroke="#D4AF37" stroke-width="1" opacity="0.3"/>
+            <circle cx="55" cy="60" r="4" fill="#D4AF37" opacity="0.5"/>
+            <circle cx="72" cy="60" r="4" fill="#D4AF37" opacity="0.3"/>
+            <circle cx="89" cy="60" r="4" fill="#D4AF37" opacity="0.2"/>
+            <rect x="55" y="82" width="60" height="8" rx="3" fill="#D4AF37" opacity="0.4"/>
+            <rect x="55" y="96" width="40" height="8" rx="3" fill="#D4AF37" opacity="0.25"/>
+            <rect x="55" y="110" width="50" height="8" rx="3" fill="#D4AF37" opacity="0.25"/>
+            <circle cx="190" cy="105" r="22" fill="none" stroke="#D4AF37" stroke-width="2" opacity="0.5"/>
+            <path d="M178 105 L187 114 L205 96" stroke="#D4AF37" stroke-width="2.5" fill="none"/>
+          </svg>
+          <span class="absolute top-3 right-3 rounded-full bg-amber-400/20 border border-amber-400/40 px-3 py-1 font-mono text-[10px] uppercase tracking-wide text-amber-300">
+            <i class="fa-solid fa-circle-half-stroke mr-1"></i> Ongoing
+          </span>
+        </div>
+        <div class="p-6">
+          <div class="mb-1 font-mono text-[10px] uppercase tracking-[0.14em] text-forest">Training</div>
+          <h3 class="font-display text-xl font-semibold text-ink">Career Accelerator Program</h3>
+          <p class="mt-2 font-body text-sm leading-relaxed text-ink-soft">A 12-week boot camp in software engineering, data science, and design, co-facilitated by industry-active alumni. Over 120 graduates placed so far.</p>
+          <div class="mt-4">
+            <div class="mb-1.5 flex items-center justify-between">
+              <span class="font-body text-xs text-ink-soft">₦2.1M raised of ₦3M</span>
+              <span class="font-mono text-xs font-semibold text-forest">70%</span>
+            </div>
+            <div class="h-2 w-full overflow-hidden rounded-full bg-ink/8">
+              <div class="progress-bar h-full rounded-full bg-gradient-to-r from-ink to-ink-soft" style="--fill: 70%"></div>
+            </div>
+          </div>
+          <div class="mt-4 flex items-center justify-between">
+            <span class="font-body text-xs text-ink-soft"><i class="fa-regular fa-calendar mr-1 text-forest"></i> Bi-annual</span>
+            <a href="#" class="inline-flex items-center gap-1.5 font-body text-sm font-semibold text-forest transition-all group-hover:gap-2.5">
+              Learn More <i class="fa-solid fa-arrow-right text-xs"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 5: Department Resource Centre -->
+      <div class="project-card group rounded-3xl border border-ink/8 bg-white overflow-hidden" data-category="infrastructure">
+        <div class="relative h-44 bg-gradient-to-br from-forest-dark to-gold-deep flex items-center justify-center overflow-hidden">
+          <svg viewBox="0 0 280 160" class="h-full w-full" aria-hidden="true">
+            <rect x="50" y="40" width="180" height="100" rx="4" fill="none" stroke="#D4AF37" stroke-width="1.5" opacity="0.5"/>
+            <rect x="65" y="55" width="25" height="70" rx="2" fill="#D4AF37" opacity="0.2"/>
+            <rect x="97" y="55" width="25" height="70" rx="2" fill="#D4AF37" opacity="0.3"/>
+            <rect x="129" y="55" width="25" height="70" rx="2" fill="#D4AF37" opacity="0.2"/>
+            <rect x="161" y="55" width="25" height="70" rx="2" fill="#D4AF37" opacity="0.35"/>
+            <rect x="193" y="55" width="25" height="70" rx="2" fill="#D4AF37" opacity="0.15"/>
+            <line x1="50" y1="125" x2="230" y2="125" stroke="#D4AF37" stroke-width="1.5" opacity="0.4"/>
+            <rect x="115" y="130" width="50" height="10" rx="2" fill="#D4AF37" opacity="0.3"/>
+          </svg>
+          <span class="absolute top-3 right-3 rounded-full bg-blue-400/20 border border-blue-400/40 px-3 py-1 font-mono text-[10px] uppercase tracking-wide text-blue-300">
+            <i class="fa-solid fa-clock mr-1"></i> Planning
+          </span>
+        </div>
+        <div class="p-6">
+          <div class="mb-1 font-mono text-[10px] uppercase tracking-[0.14em] text-forest">Infrastructure</div>
+          <h3 class="font-display text-xl font-semibold text-ink">Department Resource Centre</h3>
+          <p class="mt-2 font-body text-sm leading-relaxed text-ink-soft">A well-stocked digital and physical library with subscriptions to IEEE, ACM, and O'Reilly, plus quiet study areas for research students.</p>
+          <div class="mt-4">
+            <div class="mb-1.5 flex items-center justify-between">
+              <span class="font-body text-xs text-ink-soft">₦1.4M raised of ₦8M</span>
+              <span class="font-mono text-xs font-semibold text-forest">18%</span>
+            </div>
+            <div class="h-2 w-full overflow-hidden rounded-full bg-ink/8">
+              <div class="progress-bar h-full rounded-full bg-gradient-to-r from-blue-500 to-blue-400" style="--fill: 18%"></div>
+            </div>
+          </div>
+          <div class="mt-4 flex items-center justify-between">
+            <span class="font-body text-xs text-ink-soft"><i class="fa-regular fa-calendar mr-1 text-forest"></i> Q3 2027</span>
+            <a href="#" class="inline-flex items-center gap-1.5 font-body text-sm font-semibold text-forest transition-all group-hover:gap-2.5">
+              Learn More <i class="fa-solid fa-arrow-right text-xs"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 6: Annual Tech Conference -->
+      <div class="project-card group rounded-3xl border border-ink/8 bg-white overflow-hidden" data-category="events">
+        <div class="relative h-44 bg-gradient-to-br from-purple-900 to-forest-dark flex items-center justify-center overflow-hidden">
+          <svg viewBox="0 0 280 160" class="h-full w-full" aria-hidden="true">
+            <rect x="30" y="90" width="220" height="50" rx="4" fill="none" stroke="#D4AF37" stroke-width="1.5" opacity="0.4"/>
+            <ellipse cx="140" cy="95" rx="70" ry="10" fill="#D4AF37" opacity="0.1"/>
+            <rect x="120" y="45" width="40" height="45" rx="2" fill="#D4AF37" opacity="0.2"/>
+            <circle cx="80" cy="80" r="14" fill="none" stroke="#D4AF37" stroke-width="1.5" opacity="0.5"/>
+            <circle cx="200" cy="80" r="14" fill="none" stroke="#D4AF37" stroke-width="1.5" opacity="0.5"/>
+            <path d="M75 75 L80 70 L82 77 L86 72 L80 80" fill="#D4AF37" opacity="0.5"/>
+            <path d="M195 75 L200 70 L202 77 L206 72 L200 80" fill="#D4AF37" opacity="0.5"/>
+            <circle cx="140" cy="55" r="8" fill="#D4AF37" opacity="0.3"/>
+            <path d="M135 53 L140 48 L145 53 L143 58 L137 58 Z" fill="#D4AF37" opacity="0.6"/>
+          </svg>
+          <span class="absolute top-3 right-3 rounded-full bg-purple-400/20 border border-purple-400/40 px-3 py-1 font-mono text-[10px] uppercase tracking-wide text-purple-300">
+            <i class="fa-solid fa-calendar-check mr-1"></i> Annual
+          </span>
+        </div>
+        <div class="p-6">
+          <div class="mb-1 font-mono text-[10px] uppercase tracking-[0.14em] text-forest">Events</div>
+          <h3 class="font-display text-xl font-semibold text-ink">Annual Tech Conference</h3>
+          <p class="mt-2 font-body text-sm leading-relaxed text-ink-soft">The flagship gathering of NACOS UNN alumni, students, and industry partners. Talks, panels, demos, and networking across two days.</p>
+          <div class="mt-4">
+            <div class="mb-1.5 flex items-center justify-between">
+              <span class="font-body text-xs text-ink-soft">₦3.8M raised of ₦5M</span>
+              <span class="font-mono text-xs font-semibold text-forest">76%</span>
+            </div>
+            <div class="h-2 w-full overflow-hidden rounded-full bg-ink/8">
+              <div class="progress-bar h-full rounded-full bg-gradient-to-r from-purple-600 to-purple-400" style="--fill: 76%"></div>
+            </div>
+          </div>
+          <div class="mt-4 flex items-center justify-between">
+            <span class="font-body text-xs text-ink-soft"><i class="fa-regular fa-calendar mr-1 text-forest"></i> Nov 2026</span>
+            <a href="#" class="inline-flex items-center gap-1.5 font-body text-sm font-semibold text-forest transition-all group-hover:gap-2.5">
+              Learn More <i class="fa-solid fa-arrow-right text-xs"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ===================================================================
+       ONGOING PROJECTS — animated progress cards
+  ==================================================================== -->
+  <section id="ongoing-projects" class="bg-mist py-20 sm:py-28">
+    <div class="container-content">
+      <div class="mx-auto max-w-2xl text-center">
+        <p class="eyebrow eyebrow--light mx-auto mb-4 justify-center">
+          <i class="fa-solid fa-spinner"></i> Ongoing Projects
+        </p>
+        <h2 class="font-display text-3xl font-semibold text-ink sm:text-4xl">
+          In progress right now.
+        </h2>
+      </div>
+
+      <div class="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+
+        <!-- Ongoing 1 -->
+        <div class="reveal-on-scroll rounded-2xl border border-ink/8 bg-white p-6 shadow-sm">
+          <div class="flex items-start justify-between gap-4 mb-4">
+            <div>
+              <span class="font-mono text-[10px] uppercase tracking-[0.14em] text-gold-deep">Infrastructure</span>
+              <h3 class="font-display text-lg font-semibold text-ink mt-0.5">Smart Computer Lab</h3>
+            </div>
+            <span class="flex-shrink-0 rounded-full bg-amber-50 border border-amber-200 px-2.5 py-1 font-mono text-[10px] text-amber-700">Active</span>
+          </div>
+          <div class="mb-1 flex justify-between font-body text-xs text-ink-soft">
+            <span>₦32.6M raised</span><span class="font-semibold text-forest">68%</span>
+          </div>
+          <div class="h-2.5 w-full overflow-hidden rounded-full bg-ink/8 mb-4">
+            <div class="progress-bar h-full rounded-full bg-forest" style="--fill: 68%"></div>
+          </div>
+          <div class="grid grid-cols-2 gap-3 text-xs font-body text-ink-soft mb-4">
+            <div><span class="font-semibold text-ink block">₦15.4M</span> Remaining</div>
+            <div><span class="font-semibold text-ink block">Dec 2026</span> Deadline</div>
+            <div><span class="font-semibold text-ink block">147</span> Contributors</div>
+            <div><span class="font-semibold text-ink block">60</span> Workstations</div>
+          </div>
+          <p class="font-body text-xs text-ink-soft border-t border-ink/8 pt-3">
+            <i class="fa-solid fa-circle-info mr-1 text-forest"></i>
+            <strong>Latest:</strong> Electrical fittings complete. Workstation procurement begins July 2026.
+          </p>
+        </div>
+
+        <!-- Ongoing 2 -->
+        <div class="reveal-on-scroll rounded-2xl border border-ink/8 bg-white p-6 shadow-sm">
+          <div class="flex items-start justify-between gap-4 mb-4">
+            <div>
+              <span class="font-mono text-[10px] uppercase tracking-[0.14em] text-gold-deep">Infrastructure</span>
+              <h3 class="font-display text-lg font-semibold text-ink mt-0.5">Innovation Hub</h3>
+            </div>
+            <span class="flex-shrink-0 rounded-full bg-amber-50 border border-amber-200 px-2.5 py-1 font-mono text-[10px] text-amber-700">Active</span>
+          </div>
+          <div class="mb-1 flex justify-between font-body text-xs text-ink-soft">
+            <span>₦11.2M raised</span><span class="font-semibold text-forest">56%</span>
+          </div>
+          <div class="h-2.5 w-full overflow-hidden rounded-full bg-ink/8 mb-4">
+            <div class="progress-bar h-full rounded-full bg-gold-deep" style="--fill: 56%"></div>
+          </div>
+          <div class="grid grid-cols-2 gap-3 text-xs font-body text-ink-soft mb-4">
+            <div><span class="font-semibold text-ink block">₦8.8M</span> Remaining</div>
+            <div><span class="font-semibold text-ink block">Mar 2027</span> Deadline</div>
+            <div><span class="font-semibold text-ink block">89</span> Contributors</div>
+            <div><span class="font-semibold text-ink block">3</span> Floors planned</div>
+          </div>
+          <p class="font-body text-xs text-ink-soft border-t border-ink/8 pt-3">
+            <i class="fa-solid fa-circle-info mr-1 text-forest"></i>
+            <strong>Latest:</strong> Architectural drawings approved. Foundation work scheduled for August 2026.
+          </p>
+        </div>
+
+        <!-- Ongoing 3 -->
+        <div class="reveal-on-scroll rounded-2xl border border-ink/8 bg-white p-6 shadow-sm">
+          <div class="flex items-start justify-between gap-4 mb-4">
+            <div>
+              <span class="font-mono text-[10px] uppercase tracking-[0.14em] text-gold-deep">Training</span>
+              <h3 class="font-display text-lg font-semibold text-ink mt-0.5">Career Accelerator</h3>
+            </div>
+            <span class="flex-shrink-0 rounded-full bg-emerald-50 border border-emerald-200 px-2.5 py-1 font-mono text-[10px] text-emerald-700">Cohort 3</span>
+          </div>
+          <div class="mb-1 flex justify-between font-body text-xs text-ink-soft">
+            <span>₦2.1M raised</span><span class="font-semibold text-forest">70%</span>
+          </div>
+          <div class="h-2.5 w-full overflow-hidden rounded-full bg-ink/8 mb-4">
+            <div class="progress-bar h-full rounded-full bg-ink" style="--fill: 70%"></div>
+          </div>
+          <div class="grid grid-cols-2 gap-3 text-xs font-body text-ink-soft mb-4">
+            <div><span class="font-semibold text-ink block">₦0.9M</span> Remaining</div>
+            <div><span class="font-semibold text-ink block">Aug 2026</span> Cohort End</div>
+            <div><span class="font-semibold text-ink block">34</span> Contributors</div>
+            <div><span class="font-semibold text-ink block">45</span> Students enrolled</div>
+          </div>
+          <p class="font-body text-xs text-ink-soft border-t border-ink/8 pt-3">
+            <i class="fa-solid fa-circle-info mr-1 text-forest"></i>
+            <strong>Latest:</strong> Week 7 of 12 complete. React &amp; Node.js modules underway.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ===================================================================
+       COMPLETED PROJECTS
+  ==================================================================== -->
+  <section id="completed-projects" class="container-content py-20 sm:py-28">
+    <div class="mx-auto max-w-2xl text-center">
+      <p class="eyebrow eyebrow--light mx-auto mb-4 justify-center">
+        <i class="fa-solid fa-circle-check"></i> Completed Projects
+      </p>
+      <h2 class="font-display text-3xl font-semibold text-ink sm:text-4xl">
+        What we've already delivered.
+      </h2>
+    </div>
+
+    <div class="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+
+      <!-- Completed 1 -->
+      <div class="reveal-on-scroll rounded-3xl border border-ink/8 bg-white overflow-hidden">
+        <div class="relative h-36 bg-gradient-to-br from-forest-dark to-forest flex items-center justify-center">
+          <svg viewBox="0 0 260 140" class="h-full w-full opacity-60" aria-hidden="true">
+            <circle cx="130" cy="70" r="45" fill="none" stroke="#D4AF37" stroke-width="2"/>
+            <path d="M110 70 L123 83 L152 54" stroke="#D4AF37" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <div class="absolute inset-0 flex items-center justify-center">
+            <span class="flex h-14 w-14 items-center justify-center rounded-full bg-gold shadow-lg">
+              <i class="fa-solid fa-check text-forest-dark text-xl"></i>
+            </span>
+          </div>
+          <span class="absolute top-3 right-3 rounded-full bg-emerald-400/20 border border-emerald-400/40 px-3 py-1 font-mono text-[10px] uppercase tracking-wide text-emerald-300">
+            Completed
+          </span>
+        </div>
+        <div class="p-6">
+          <div class="mb-1 font-mono text-[10px] uppercase tracking-[0.14em] text-forest">Scholarships</div>
+          <h3 class="font-display text-lg font-semibold text-ink">Pioneer Scholarship Program</h3>
+          <p class="mt-2 font-body text-sm leading-relaxed text-ink-soft">Our first scholarship cohort provided full-year tuition relief to 12 students from low-income backgrounds in the 2024/25 session.</p>
+          <div class="mt-4 grid grid-cols-3 gap-3 rounded-xl bg-mist p-3 text-center">
+            <div><p class="font-display text-lg font-semibold text-forest">12</p><p class="font-mono text-[10px] text-ink-soft uppercase">Students</p></div>
+            <div><p class="font-display text-lg font-semibold text-forest">₦3.6M</p><p class="font-mono text-[10px] text-ink-soft uppercase">Disbursed</p></div>
+            <div><p class="font-display text-lg font-semibold text-forest">2024</p><p class="font-mono text-[10px] text-ink-soft uppercase">Completed</p></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Completed 2 -->
+      <div class="reveal-on-scroll rounded-3xl border border-ink/8 bg-white overflow-hidden">
+        <div class="relative h-36 bg-gradient-to-br from-gold-deep to-gold-soft flex items-center justify-center">
+          <svg viewBox="0 0 260 140" class="h-full w-full opacity-50" aria-hidden="true">
+            <rect x="50" y="30" width="160" height="90" rx="6" fill="none" stroke="#073F22" stroke-width="2"/>
+            <line x1="50" y1="55" x2="210" y2="55" stroke="#073F22" stroke-width="1.5"/>
+            <rect x="65" y="65" width="80" height="6" rx="3" fill="#073F22" opacity="0.5"/>
+            <rect x="65" y="78" width="50" height="6" rx="3" fill="#073F22" opacity="0.4"/>
+            <rect x="65" y="91" width="65" height="6" rx="3" fill="#073F22" opacity="0.4"/>
+          </svg>
+          <div class="absolute inset-0 flex items-center justify-center">
+            <span class="flex h-14 w-14 items-center justify-center rounded-full bg-forest shadow-lg">
+              <i class="fa-solid fa-check text-white text-xl"></i>
+            </span>
+          </div>
+          <span class="absolute top-3 right-3 rounded-full bg-emerald-400/20 border border-emerald-400/40 px-3 py-1 font-mono text-[10px] uppercase tracking-wide text-emerald-700">
+            Completed
+          </span>
+        </div>
+        <div class="p-6">
+          <div class="mb-1 font-mono text-[10px] uppercase tracking-[0.14em] text-forest">Community</div>
+          <h3 class="font-display text-lg font-semibold text-ink">Alumni Registration Drive</h3>
+          <p class="mt-2 font-body text-sm leading-relaxed text-ink-soft">Coordinated outreach across 14 graduate cohorts, registering over 400 alumni onto the official directory in under six months.</p>
+          <div class="mt-4 grid grid-cols-3 gap-3 rounded-xl bg-mist p-3 text-center">
+            <div><p class="font-display text-lg font-semibold text-forest">400+</p><p class="font-mono text-[10px] text-ink-soft uppercase">Registered</p></div>
+            <div><p class="font-display text-lg font-semibold text-forest">14</p><p class="font-mono text-[10px] text-ink-soft uppercase">Cohorts</p></div>
+            <div><p class="font-display text-lg font-semibold text-forest">2025</p><p class="font-mono text-[10px] text-ink-soft uppercase">Completed</p></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Completed 3 -->
+      <div class="reveal-on-scroll rounded-3xl border border-ink/8 bg-white overflow-hidden">
+        <div class="relative h-36 bg-gradient-to-br from-purple-900 to-ink flex items-center justify-center">
+          <svg viewBox="0 0 260 140" class="h-full w-full opacity-50" aria-hidden="true">
+            <rect x="60" y="50" width="140" height="70" rx="4" fill="none" stroke="#D4AF37" stroke-width="2"/>
+            <line x1="130" y1="50" x2="130" y2="20" stroke="#D4AF37" stroke-width="1.5"/>
+            <rect x="110" y="10" width="40" height="12" rx="3" fill="#D4AF37" opacity="0.5"/>
+            <circle cx="90" cy="85" r="15" fill="none" stroke="#D4AF37" stroke-width="1.5"/>
+            <circle cx="170" cy="85" r="15" fill="none" stroke="#D4AF37" stroke-width="1.5"/>
+          </svg>
+          <div class="absolute inset-0 flex items-center justify-center">
+            <span class="flex h-14 w-14 items-center justify-center rounded-full bg-gold shadow-lg">
+              <i class="fa-solid fa-check text-forest-dark text-xl"></i>
+            </span>
+          </div>
+          <span class="absolute top-3 right-3 rounded-full bg-emerald-400/20 border border-emerald-400/40 px-3 py-1 font-mono text-[10px] uppercase tracking-wide text-emerald-300">
+            Completed
+          </span>
+        </div>
+        <div class="p-6">
+          <div class="mb-1 font-mono text-[10px] uppercase tracking-[0.14em] text-forest">Events</div>
+          <h3 class="font-display text-lg font-semibold text-ink">Inaugural Tech Conference 2025</h3>
+          <p class="mt-2 font-body text-sm leading-relaxed text-ink-soft">First-ever NACOS UNN Tech Summit brought together 240 attendees, 18 speakers, and 6 industry partners for a two-day event on campus.</p>
+          <div class="mt-4 grid grid-cols-3 gap-3 rounded-xl bg-mist p-3 text-center">
+            <div><p class="font-display text-lg font-semibold text-forest">240</p><p class="font-mono text-[10px] text-ink-soft uppercase">Attendees</p></div>
+            <div><p class="font-display text-lg font-semibold text-forest">18</p><p class="font-mono text-[10px] text-ink-soft uppercase">Speakers</p></div>
+            <div><p class="font-display text-lg font-semibold text-forest">2025</p><p class="font-mono text-[10px] text-ink-soft uppercase">Completed</p></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ===================================================================
+       UPCOMING PROJECTS — Roadmap cards
+  ==================================================================== -->
+  <section id="upcoming-projects" class="bg-mist py-20 sm:py-28">
+    <div class="container-content">
+      <div class="mx-auto max-w-2xl text-center">
+        <p class="eyebrow eyebrow--light mx-auto mb-4 justify-center">
+          <i class="fa-solid fa-road"></i> Upcoming Projects
+        </p>
+        <h2 class="font-display text-3xl font-semibold text-ink sm:text-4xl">
+          What we're building next.
+        </h2>
+        <p class="mt-4 font-body text-sm leading-relaxed text-ink-soft sm:text-base">
+          These initiatives are in planning. Early sponsors lock in naming rights and priority recognition.
+        </p>
+      </div>
+
+      <div class="future-roadmap mt-14">
+
+        <div class="future-roadmap__step reveal-on-scroll">
+          <span class="future-roadmap__icon"><i class="fa-solid fa-wifi"></i></span>
+          <span class="future-roadmap__phase">Phase 1 · Q1 2027</span>
+          <h3 class="future-roadmap__title">Campus-Wide Wi-Fi Upgrade</h3>
+          <p class="font-body text-xs text-ink-soft mt-1 leading-relaxed">High-speed wireless infrastructure across the CS department and adjoining blocks.</p>
+          <p class="mt-3 font-display text-base font-semibold text-ink">Budget: ₦6M</p>
+          <a href="support.html" class="mt-4 inline-flex items-center gap-1.5 rounded-full border border-forest px-4 py-2 font-body text-xs font-semibold text-forest transition-colors hover:bg-forest hover:text-white">
+            <i class="fa-solid fa-hand-holding-dollar"></i> Become a Sponsor
+          </a>
+        </div>
+
+        <div class="future-roadmap__step reveal-on-scroll">
+          <span class="future-roadmap__icon"><i class="fa-solid fa-microchip"></i></span>
+          <span class="future-roadmap__phase">Phase 2 · Q2 2027</span>
+          <h3 class="future-roadmap__title">AI & Robotics Lab</h3>
+          <p class="font-body text-xs text-ink-soft mt-1 leading-relaxed">Dedicated space for machine learning, embedded systems, and robotics projects.</p>
+          <p class="mt-3 font-display text-base font-semibold text-ink">Budget: ₦12M</p>
+          <a href="support.html" class="mt-4 inline-flex items-center gap-1.5 rounded-full border border-forest px-4 py-2 font-body text-xs font-semibold text-forest transition-colors hover:bg-forest hover:text-white">
+            <i class="fa-solid fa-hand-holding-dollar"></i> Become a Sponsor
+          </a>
+        </div>
+
+        <div class="future-roadmap__step reveal-on-scroll">
+          <span class="future-roadmap__icon"><i class="fa-solid fa-person-chalkboard"></i></span>
+          <span class="future-roadmap__phase">Phase 3 · Q3 2027</span>
+          <h3 class="future-roadmap__title">Graduate Mentorship Portal</h3>
+          <p class="font-body text-xs text-ink-soft mt-1 leading-relaxed">A digital platform connecting final-year students to alumni mentors across Africa and the diaspora.</p>
+          <p class="mt-3 font-display text-base font-semibold text-ink">Budget: ₦2M</p>
+          <a href="support.html" class="mt-4 inline-flex items-center gap-1.5 rounded-full border border-forest px-4 py-2 font-body text-xs font-semibold text-forest transition-colors hover:bg-forest hover:text-white">
+            <i class="fa-solid fa-hand-holding-dollar"></i> Become a Sponsor
+          </a>
+        </div>
+
+        <div class="future-roadmap__step reveal-on-scroll">
+          <span class="future-roadmap__icon"><i class="fa-solid fa-trophy"></i></span>
+          <span class="future-roadmap__phase">Phase 4 · Q4 2027</span>
+          <h3 class="future-roadmap__title">Annual Excellence Awards</h3>
+          <p class="font-body text-xs text-ink-soft mt-1 leading-relaxed">A formal awards event recognising the top graduating student, best research, and alumni of the year.</p>
+          <p class="mt-3 font-display text-base font-semibold text-ink">Budget: ₦3.5M</p>
+          <a href="support.html" class="mt-4 inline-flex items-center gap-1.5 rounded-full border border-forest px-4 py-2 font-body text-xs font-semibold text-forest transition-colors hover:bg-forest hover:text-white">
+            <i class="fa-solid fa-hand-holding-dollar"></i> Become a Sponsor
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ===================================================================
+       ANNUAL IMPACT — Animated Counters
+  ==================================================================== -->
+  <section id="annual-impact" class="container-content py-20 sm:py-28">
+    <div class="mx-auto max-w-2xl text-center">
+      <p class="eyebrow eyebrow--light mx-auto mb-4 justify-center">
+        <i class="fa-solid fa-chart-line"></i> Annual Impact
+      </p>
+      <h2 class="font-display text-3xl font-semibold text-ink sm:text-4xl">
+        Numbers that tell the story.
+      </h2>
+    </div>
+
+    <div class="mt-14 grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-6">
+      <div class="stat-card text-center">
+        <span class="stat-card__icon mx-auto"><i class="fa-solid fa-graduation-cap"></i></span>
+        <p class="stat-card__value counter-val" data-target="36">36</p>
+        <p class="stat-card__label">Students Sponsored</p>
+      </div>
+      <div class="stat-card text-center">
+        <span class="stat-card__icon mx-auto"><i class="fa-solid fa-medal"></i></span>
+        <p class="stat-card__value counter-val" data-target="12">12</p>
+        <p class="stat-card__label">Scholarships Awarded</p>
+      </div>
+      <div class="stat-card text-center">
+        <span class="stat-card__icon mx-auto"><i class="fa-solid fa-laptop-code"></i></span>
+        <p class="stat-card__value counter-val" data-target="8">8</p>
+        <p class="stat-card__label">Training Programs</p>
+      </div>
+      <div class="stat-card text-center">
+        <span class="stat-card__icon mx-auto"><i class="fa-solid fa-clock"></i></span>
+        <p class="stat-card__value counter-val" data-target="1240">1,240</p>
+        <p class="stat-card__label">Mentorship Hours</p>
+      </div>
+      <div class="stat-card text-center">
+        <span class="stat-card__icon mx-auto"><i class="fa-solid fa-briefcase"></i></span>
+        <p class="stat-card__value counter-val" data-target="120">120</p>
+        <p class="stat-card__label">Graduate Placements</p>
+      </div>
+      <div class="stat-card text-center">
+        <span class="stat-card__icon mx-auto"><i class="fa-solid fa-building-columns"></i></span>
+        <p class="stat-card__value counter-val" data-target="6">6</p>
+        <p class="stat-card__label">Dept. Projects</p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ===================================================================
+       FINANCIAL TRANSPARENCY
+  ==================================================================== -->
+  <section id="financial-transparency" class="bg-mist py-20 sm:py-28">
+    <div class="container-content">
+      <div class="mx-auto max-w-2xl text-center">
+        <p class="eyebrow eyebrow--light mx-auto mb-4 justify-center">
+          <i class="fa-solid fa-magnifying-glass-chart"></i> Financial Transparency
+        </p>
+        <h2 class="font-display text-3xl font-semibold text-ink sm:text-4xl">
+          Every kobo accounted for.
+        </h2>
+        <p class="mt-4 font-body text-sm leading-relaxed text-ink-soft sm:text-base">
+          We publish full financials quarterly. Here's our current fund overview.
+        </p>
+      </div>
+
+      <div class="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <div class="rounded-2xl border border-ink/8 bg-white p-6 shadow-sm text-center">
+          <div class="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-forest/10">
+            <i class="fa-solid fa-arrow-trend-up text-forest"></i>
+          </div>
+          <p class="font-display text-3xl font-semibold text-ink">₦48.2M</p>
+          <p class="mt-1 font-body text-sm text-ink-soft">Total Raised</p>
+        </div>
+        <div class="rounded-2xl border border-ink/8 bg-white p-6 shadow-sm text-center">
+          <div class="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-gold/15">
+            <i class="fa-solid fa-building-columns text-gold-deep"></i>
+          </div>
+          <p class="font-display text-3xl font-semibold text-ink">₦29.4M</p>
+          <p class="mt-1 font-body text-sm text-ink-soft">Invested in Projects</p>
+        </div>
+        <div class="rounded-2xl border border-ink/8 bg-white p-6 shadow-sm text-center">
+          <div class="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-emerald-50">
+            <i class="fa-solid fa-wallet text-emerald-600"></i>
+          </div>
+          <p class="font-display text-3xl font-semibold text-ink">₦15.6M</p>
+          <p class="mt-1 font-body text-sm text-ink-soft">Current Balance</p>
+        </div>
+        <div class="rounded-2xl border border-ink/8 bg-white p-6 shadow-sm text-center">
+          <div class="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-purple-50">
+            <i class="fa-solid fa-percent text-purple-600"></i>
+          </div>
+          <p class="font-display text-3xl font-semibold text-ink">₦3.2M</p>
+          <p class="mt-1 font-body text-sm text-ink-soft">Investment Returns</p>
+        </div>
+      </div>
+
+      <!-- Spending breakdown bar -->
+      <div class="mt-10 rounded-2xl border border-ink/8 bg-white p-6 sm:p-8">
+        <h3 class="font-display text-lg font-semibold text-ink mb-6">How Funds Are Allocated</h3>
+        <div class="space-y-4">
+          <div>
+            <div class="mb-1 flex justify-between font-body text-sm">
+              <span class="text-ink-soft">Infrastructure Projects</span><span class="font-semibold text-ink">52%</span>
+            </div>
+            <div class="h-3 w-full overflow-hidden rounded-full bg-ink/8">
+              <div class="progress-bar h-full rounded-full bg-forest" style="--fill: 52%"></div>
+            </div>
+          </div>
+          <div>
+            <div class="mb-1 flex justify-between font-body text-sm">
+              <span class="text-ink-soft">Scholarships &amp; Student Support</span><span class="font-semibold text-ink">24%</span>
+            </div>
+            <div class="h-3 w-full overflow-hidden rounded-full bg-ink/8">
+              <div class="progress-bar h-full rounded-full bg-gold-deep" style="--fill: 24%"></div>
+            </div>
+          </div>
+          <div>
+            <div class="mb-1 flex justify-between font-body text-sm">
+              <span class="text-ink-soft">Training &amp; Career Programs</span><span class="font-semibold text-ink">14%</span>
+            </div>
+            <div class="h-3 w-full overflow-hidden rounded-full bg-ink/8">
+              <div class="progress-bar h-full rounded-full bg-ink" style="--fill: 14%"></div>
+            </div>
+          </div>
+          <div>
+            <div class="mb-1 flex justify-between font-body text-sm">
+              <span class="text-ink-soft">Events &amp; Community</span><span class="font-semibold text-ink">7%</span>
+            </div>
+            <div class="h-3 w-full overflow-hidden rounded-full bg-ink/8">
+              <div class="progress-bar h-full rounded-full bg-purple-500" style="--fill: 7%"></div>
+            </div>
+          </div>
+          <div>
+            <div class="mb-1 flex justify-between font-body text-sm">
+              <span class="text-ink-soft">Administration &amp; Ops</span><span class="font-semibold text-ink">3%</span>
+            </div>
+            <div class="h-3 w-full overflow-hidden rounded-full bg-ink/8">
+              <div class="progress-bar h-full rounded-full bg-ink-soft" style="--fill: 3%"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-8 flex flex-wrap gap-3">
+          <a href="#" class="btn-outline-dark text-sm py-2.5 px-5">
+            <i class="fa-solid fa-file-pdf"></i> Annual Reports
+          </a>
+          <a href="#" class="btn-outline-dark text-sm py-2.5 px-5">
+            <i class="fa-solid fa-file-invoice-dollar"></i> Financial Statements
+          </a>
+          <a href="#" class="btn-outline-dark text-sm py-2.5 px-5">
+            <i class="fa-solid fa-shield-halved"></i> Audit Reports
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ===================================================================
+       TIMELINE — Association Milestones
+  ==================================================================== -->
+  <section id="milestones" class="container-content py-20 sm:py-28">
+    <div class="mx-auto max-w-2xl text-center">
+      <p class="eyebrow eyebrow--light mx-auto mb-4 justify-center">
+        <i class="fa-solid fa-timeline"></i> Our Timeline
+      </p>
+      <h2 class="font-display text-3xl font-semibold text-ink sm:text-4xl">
+        How we got here.
+      </h2>
+    </div>
+
+    <div class="relative mt-16 mx-auto max-w-2xl">
+      <!-- Vertical connector line -->
+      <div class="absolute left-6 top-0 bottom-0 w-0.5 bg-gradient-to-b from-forest via-gold to-forest lg:left-1/2 lg:-translate-x-px" aria-hidden="true"></div>
+
+      <!-- Timeline items -->
+      <div class="space-y-10">
+
+        <div class="relative flex items-start gap-6 lg:justify-end lg:pr-[calc(50%+1.5rem)]">
+          <div class="relative z-10 flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full border-2 border-gold bg-white shadow-sm">
+            <i class="fa-solid fa-flag text-forest text-sm"></i>
+          </div>
+          <div class="rounded-2xl border border-ink/8 bg-white p-5 shadow-sm flex-1 lg:max-w-xs">
+            <span class="font-mono text-[11px] uppercase tracking-[0.14em] text-gold-deep">2024</span>
+            <h3 class="font-display text-base font-semibold text-ink mt-1">Association Founded</h3>
+            <p class="font-body text-xs text-ink-soft mt-1 leading-relaxed">NACOS UNN Alumni Association officially registered and launched with 47 founding members.</p>
+          </div>
+        </div>
+
+        <div class="relative flex items-start gap-6 lg:flex-row-reverse lg:justify-end lg:pl-[calc(50%+1.5rem)]">
+          <div class="relative z-10 flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full border-2 border-gold bg-white shadow-sm lg:order-first lg:ml-[calc(-50%-1.5rem-1.5rem)] lg:mr-0">
+            <i class="fa-solid fa-graduation-cap text-forest text-sm"></i>
+          </div>
+          <div class="rounded-2xl border border-ink/8 bg-white p-5 shadow-sm flex-1 lg:max-w-xs">
+            <span class="font-mono text-[11px] uppercase tracking-[0.14em] text-gold-deep">2025</span>
+            <h3 class="font-display text-base font-semibold text-ink mt-1">First Scholarship Awarded</h3>
+            <p class="font-body text-xs text-ink-soft mt-1 leading-relaxed">12 students received full-year tuition scholarships in the pioneer cohort.</p>
+          </div>
+        </div>
+
+        <div class="relative flex items-start gap-6 lg:justify-end lg:pr-[calc(50%+1.5rem)]">
+          <div class="relative z-10 flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full border-2 border-gold bg-white shadow-sm">
+            <i class="fa-solid fa-lightbulb text-forest text-sm"></i>
+          </div>
+          <div class="rounded-2xl border border-ink/8 bg-white p-5 shadow-sm flex-1 lg:max-w-xs">
+            <span class="font-mono text-[11px] uppercase tracking-[0.14em] text-gold-deep">2026</span>
+            <h3 class="font-display text-base font-semibold text-ink mt-1">Innovation Hub Announced</h3>
+            <p class="font-body text-xs text-ink-soft mt-1 leading-relaxed">₦20M campus hub launched, reaching 56% funding within the first quarter.</p>
+          </div>
+        </div>
+
+        <div class="relative flex items-start gap-6 lg:flex-row-reverse lg:justify-end lg:pl-[calc(50%+1.5rem)]">
+          <div class="relative z-10 flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full border-2 border-gold bg-white shadow-sm">
+            <i class="fa-solid fa-users text-forest text-sm"></i>
+          </div>
+          <div class="rounded-2xl border border-ink/8 bg-white p-5 shadow-sm flex-1 lg:max-w-xs">
+            <span class="font-mono text-[11px] uppercase tracking-[0.14em] text-gold-deep">2027 (Target)</span>
+            <h3 class="font-display text-base font-semibold text-ink mt-1">1,000 Alumni Registered</h3>
+            <p class="font-body text-xs text-ink-soft mt-1 leading-relaxed">Our membership drive aims to cross 1,000 verified alumni by December 2027.</p>
+          </div>
+        </div>
+
+        <div class="relative flex items-start gap-6 lg:justify-end lg:pr-[calc(50%+1.5rem)]">
+          <div class="relative z-10 flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full border-2 border-gold/40 bg-white shadow-sm opacity-60">
+            <i class="fa-solid fa-star text-gold-deep text-sm"></i>
+          </div>
+          <div class="rounded-2xl border-2 border-dashed border-ink/15 bg-white/70 p-5 flex-1 lg:max-w-xs">
+            <span class="font-mono text-[11px] uppercase tracking-[0.14em] text-ink-soft/70">Future</span>
+            <h3 class="font-display text-base font-semibold text-ink mt-1">Department Transformation</h3>
+            <p class="font-body text-xs text-ink-soft mt-1 leading-relaxed">Smart lab, innovation hub, resource centre, and mentorship portal — all fully operational.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ===================================================================
+       SUCCESS STORIES — Student + Alumni testimonials
+  ==================================================================== -->
+  <section id="success-stories" class="bg-mist py-20 sm:py-28">
+    <div class="container-content">
+      <div class="mx-auto max-w-2xl text-center">
+        <p class="eyebrow eyebrow--light mx-auto mb-4 justify-center">
+          <i class="fa-solid fa-quote-left"></i> Success Stories
+        </p>
+        <h2 class="font-display text-3xl font-semibold text-ink sm:text-4xl">
+          Lives the work is already changing.
+        </h2>
+      </div>
+
+      <div class="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+
+        <!-- Student story 1 -->
+        <div class="reveal-on-scroll rounded-3xl border border-ink/8 bg-white p-7 flex flex-col">
+          <div class="mb-4 flex items-center gap-4">
+            <div class="flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-forest to-forest-dark font-display text-xl font-semibold text-white">
+              CC
+            </div>
+            <div>
+              <p class="font-display text-base font-semibold text-ink">Chidinma Chukwu</p>
+              <p class="font-body text-xs text-ink-soft">Class of 2027 · Scholarship Recipient</p>
+            </div>
+          </div>
+          <p class="font-body text-sm leading-relaxed text-ink-soft flex-1">
+            "Before the scholarship, I had considered dropping out after my second year. The alumni fund didn't just keep me in school — it gave me the mental space to actually focus. I'm now in the top 10% of my class and building my final-year project in cybersecurity."
+          </p>
+          <div class="mt-5 flex items-center justify-between border-t border-ink/8 pt-4">
+            <span class="rounded-full bg-forest/10 px-3 py-1 font-mono text-[10px] uppercase tracking-wide text-forest">Student</span>
+            <a href="#" class="inline-flex items-center gap-1 font-body text-xs font-semibold text-ink-soft hover:text-forest transition-colors">
+              <i class="fa-brands fa-linkedin-in"></i> Connect
+            </a>
+          </div>
+        </div>
+
+        <!-- Student story 2 -->
+        <div class="reveal-on-scroll rounded-3xl border border-ink/8 bg-white p-7 flex flex-col">
+          <div class="mb-4 flex items-center gap-4">
+            <div class="flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-gold-deep to-gold font-display text-xl font-semibold text-white">
+              EO
+            </div>
+            <div>
+              <p class="font-display text-base font-semibold text-ink">Emeka Okafor</p>
+              <p class="font-body text-xs text-ink-soft">Class of 2026 · Career Accelerator Graduate</p>
+            </div>
+          </div>
+          <p class="font-body text-sm leading-relaxed text-ink-soft flex-1">
+            "The Career Accelerator is not a small thing. Within three weeks of graduation, I had two job offers in Lagos and one remote role in the UK. The alumni who taught us weren't professors — they were builders. That made all the difference."
+          </p>
+          <div class="mt-5 flex items-center justify-between border-t border-ink/8 pt-4">
+            <span class="rounded-full bg-gold/15 px-3 py-1 font-mono text-[10px] uppercase tracking-wide text-gold-deep">Graduate</span>
+            <a href="#" class="inline-flex items-center gap-1 font-body text-xs font-semibold text-ink-soft hover:text-forest transition-colors">
+              <i class="fa-brands fa-linkedin-in"></i> Connect
+            </a>
+          </div>
+        </div>
+
+        <!-- Alumni testimonial -->
+        <div class="reveal-on-scroll rounded-3xl border-2 border-forest/20 bg-gradient-to-br from-forest/5 to-white p-7 flex flex-col">
+          <div class="mb-4 flex items-center gap-4">
+            <div class="flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-forest-dark to-forest font-display text-xl font-semibold text-white">
+              AN
+            </div>
+            <div>
+              <p class="font-display text-base font-semibold text-ink">Adaeze Nwosu</p>
+              <p class="font-body text-xs text-ink-soft">Class of 2018 · Financial Member</p>
+            </div>
+          </div>
+          <p class="font-body text-sm leading-relaxed text-ink-soft flex-1">
+            "I joined as a financial member because I remember what it felt like to graduate into nothing. Now I'm a senior engineer at a fintech in Lagos. If my subscription means one student doesn't have to start from scratch, that's the best ₦10,000 I spend every year."
+          </p>
+          <div class="mt-5 flex items-center justify-between border-t border-forest/15 pt-4">
+            <span class="rounded-full bg-forest px-3 py-1 font-mono text-[10px] uppercase tracking-wide text-white">Alumni · Donor</span>
+            <a href="#" class="inline-flex items-center gap-1 font-body text-xs font-semibold text-ink-soft hover:text-forest transition-colors">
+              <i class="fa-brands fa-linkedin-in"></i> Connect
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ===================================================================
+       MINI DASHBOARD — Statistics
+  ==================================================================== -->
+  <section id="mini-dashboard" class="container-content py-20 sm:py-28">
+    <div class="mx-auto max-w-2xl text-center mb-14">
+      <p class="eyebrow eyebrow--light mx-auto mb-4 justify-center">
+        <i class="fa-solid fa-gauge-high"></i> Association Dashboard
+      </p>
+      <h2 class="font-display text-3xl font-semibold text-ink sm:text-4xl">
+        Everything in one view.
+      </h2>
+    </div>
+
+    <div class="grid grid-cols-2 gap-4 sm:grid-cols-4 lg:grid-cols-4">
+      <div class="rounded-2xl border border-ink/8 bg-white p-5 text-center shadow-sm hover:-translate-y-1 transition-transform duration-300">
+        <i class="fa-solid fa-users text-forest text-2xl mb-2"></i>
+        <p class="font-display text-3xl font-semibold text-ink">412</p>
+        <p class="font-body text-xs text-ink-soft mt-1">Registered Alumni</p>
+      </div>
+      <div class="rounded-2xl border border-ink/8 bg-white p-5 text-center shadow-sm hover:-translate-y-1 transition-transform duration-300">
+        <i class="fa-solid fa-id-card text-gold-deep text-2xl mb-2"></i>
+        <p class="font-display text-3xl font-semibold text-ink">87</p>
+        <p class="font-body text-xs text-ink-soft mt-1">Financial Members</p>
+      </div>
+      <div class="rounded-2xl border border-ink/8 bg-white p-5 text-center shadow-sm hover:-translate-y-1 transition-transform duration-300">
+        <i class="fa-solid fa-chalkboard-user text-forest text-2xl mb-2"></i>
+        <p class="font-display text-3xl font-semibold text-ink">34</p>
+        <p class="font-body text-xs text-ink-soft mt-1">Active Mentors</p>
+      </div>
+      <div class="rounded-2xl border border-ink/8 bg-white p-5 text-center shadow-sm hover:-translate-y-1 transition-transform duration-300">
+        <i class="fa-solid fa-person-circle-check text-forest-light text-2xl mb-2"></i>
+        <p class="font-display text-3xl font-semibold text-ink">840</p>
+        <p class="font-body text-xs text-ink-soft mt-1">Students Supported</p>
+      </div>
+      <div class="rounded-2xl border border-ink/8 bg-white p-5 text-center shadow-sm hover:-translate-y-1 transition-transform duration-300">
+        <i class="fa-solid fa-circle-check text-emerald-600 text-2xl mb-2"></i>
+        <p class="font-display text-3xl font-semibold text-ink">4</p>
+        <p class="font-body text-xs text-ink-soft mt-1">Projects Completed</p>
+      </div>
+      <div class="rounded-2xl border border-ink/8 bg-white p-5 text-center shadow-sm hover:-translate-y-1 transition-transform duration-300">
+        <i class="fa-solid fa-medal text-gold text-2xl mb-2"></i>
+        <p class="font-display text-3xl font-semibold text-ink">24</p>
+        <p class="font-body text-xs text-ink-soft mt-1">Scholarships Given</p>
+      </div>
+      <div class="rounded-2xl border border-ink/8 bg-white p-5 text-center shadow-sm hover:-translate-y-1 transition-transform duration-300">
+        <i class="fa-solid fa-hand-holding-heart text-rose-500 text-2xl mb-2"></i>
+        <p class="font-display text-3xl font-semibold text-ink">1,240</p>
+        <p class="font-body text-xs text-ink-soft mt-1">Volunteer Hours</p>
+      </div>
+      <div class="rounded-2xl border border-ink/8 bg-white p-5 text-center shadow-sm hover:-translate-y-1 transition-transform duration-300">
+        <i class="fa-solid fa-sack-dollar text-gold-deep text-2xl mb-2"></i>
+        <p class="font-display text-3xl font-semibold text-ink">₦48M</p>
+        <p class="font-body text-xs text-ink-soft mt-1">Funds Managed</p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ===================================================================
+       RECENT UPDATES — Blog / News timeline
+  ==================================================================== -->
+  <section id="recent-updates" class="bg-mist py-20 sm:py-28">
+    <div class="container-content">
+      <div class="mx-auto max-w-2xl text-center mb-14">
+        <p class="eyebrow eyebrow--light mx-auto mb-4 justify-center">
+          <i class="fa-solid fa-rss"></i> Recent Updates
+        </p>
+        <h2 class="font-display text-3xl font-semibold text-ink sm:text-4xl">
+          What's happening now.
+        </h2>
+      </div>
+
+      <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+
+        <article class="reveal-on-scroll rounded-2xl border border-ink/8 bg-white overflow-hidden">
+          <div class="h-32 bg-gradient-to-br from-forest to-forest-dark flex items-center justify-center">
+            <i class="fa-solid fa-laptop-code text-gold text-4xl opacity-60"></i>
+          </div>
+          <div class="p-5">
+            <div class="flex items-center gap-2 mb-2">
+              <span class="rounded-full bg-forest/10 px-2.5 py-0.5 font-mono text-[10px] uppercase tracking-wide text-forest">Project Update</span>
+              <span class="font-body text-xs text-ink-soft">Jun 20, 2026</span>
+            </div>
+            <h3 class="font-display text-base font-semibold text-ink">Smart Lab electrical fittings complete — procurement phase begins</h3>
+            <p class="mt-1.5 font-body text-xs text-ink-soft leading-relaxed">Milestone reached on the 60-workstation lab. Equipment sourcing underway with delivery expected in August.</p>
+            <a href="#" class="mt-3 inline-flex items-center gap-1.5 font-body text-xs font-semibold text-forest hover:gap-2.5 transition-all">Read More <i class="fa-solid fa-arrow-right text-[10px]"></i></a>
+          </div>
+        </article>
+
+        <article class="reveal-on-scroll rounded-2xl border border-ink/8 bg-white overflow-hidden">
+          <div class="h-32 bg-gradient-to-br from-gold-deep to-gold-soft flex items-center justify-center">
+            <i class="fa-solid fa-handshake text-forest-dark text-4xl opacity-50"></i>
+          </div>
+          <div class="p-5">
+            <div class="flex items-center gap-2 mb-2">
+              <span class="rounded-full bg-gold/15 px-2.5 py-0.5 font-mono text-[10px] uppercase tracking-wide text-gold-deep">Partnership</span>
+              <span class="font-body text-xs text-ink-soft">Jun 14, 2026</span>
+            </div>
+            <h3 class="font-display text-base font-semibold text-ink">Turing Tech joins as Career Accelerator industry partner</h3>
+            <p class="mt-1.5 font-body text-xs text-ink-soft leading-relaxed">The training academy giant will sponsor Cohort 4 and provide direct interview tracks for top performers.</p>
+            <a href="#" class="mt-3 inline-flex items-center gap-1.5 font-body text-xs font-semibold text-forest hover:gap-2.5 transition-all">Read More <i class="fa-solid fa-arrow-right text-[10px]"></i></a>
+          </div>
+        </article>
+
+        <article class="reveal-on-scroll rounded-2xl border border-ink/8 bg-white overflow-hidden">
+          <div class="h-32 bg-gradient-to-br from-ink to-ink-soft flex items-center justify-center">
+            <i class="fa-solid fa-bullhorn text-gold text-4xl opacity-50"></i>
+          </div>
+          <div class="p-5">
+            <div class="flex items-center gap-2 mb-2">
+              <span class="rounded-full bg-ink/8 px-2.5 py-0.5 font-mono text-[10px] uppercase tracking-wide text-ink-soft">Announcement</span>
+              <span class="font-body text-xs text-ink-soft">Jun 5, 2026</span>
+            </div>
+            <h3 class="font-display text-base font-semibold text-ink">Applications open for 2026/27 scholarship cohort — deadline July 31</h3>
+            <p class="mt-1.5 font-body text-xs text-ink-soft leading-relaxed">20 scholarships available this cycle. Eligible 100–300L students can apply through the portal.</p>
+            <a href="#" class="mt-3 inline-flex items-center gap-1.5 font-body text-xs font-semibold text-forest hover:gap-2.5 transition-all">Read More <i class="fa-solid fa-arrow-right text-[10px]"></i></a>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ===================================================================
+       INTERACTIVE CAMPUS MAP (SVG)
+  ==================================================================== -->
+  <section id="campus-map" class="container-content py-20 sm:py-28">
+    <div class="mx-auto max-w-2xl text-center mb-14">
+      <p class="eyebrow eyebrow--light mx-auto mb-4 justify-center">
+        <i class="fa-solid fa-map"></i> Campus Impact Map
+      </p>
+      <h2 class="font-display text-3xl font-semibold text-ink sm:text-4xl">
+        Where projects live on campus.
+      </h2>
+      <p class="mt-4 font-body text-sm text-ink-soft">Hover over each highlighted building to see the project.</p>
+    </div>
+
+    <div class="relative mx-auto max-w-3xl rounded-3xl border border-ink/8 bg-white overflow-hidden shadow-sm">
+      <svg viewBox="0 0 700 450" class="w-full h-auto" role="img" aria-label="NACOS UNN Campus project map">
+
+        <!-- Background -->
+        <rect width="700" height="450" fill="#F4F7F4"/>
+
+        <!-- Roads / paths -->
+        <line x1="0" y1="220" x2="700" y2="220" stroke="#E2E8E2" stroke-width="18"/>
+        <line x1="350" y1="0" x2="350" y2="450" stroke="#E2E8E2" stroke-width="14"/>
+        <line x1="150" y1="0" x2="150" y2="450" stroke="#E8EDE8" stroke-width="8"/>
+        <line x1="550" y1="0" x2="550" y2="450" stroke="#E8EDE8" stroke-width="8"/>
+
+        <!-- Trees / greenery -->
+        <circle cx="80" cy="80" r="18" fill="#C8DEC8" opacity="0.7"/>
+        <circle cx="110" cy="65" r="14" fill="#B8D4B8" opacity="0.7"/>
+        <circle cx="620" cy="80" r="18" fill="#C8DEC8" opacity="0.7"/>
+        <circle cx="600" cy="100" r="14" fill="#B8D4B8" opacity="0.7"/>
+        <circle cx="80" cy="360" r="18" fill="#C8DEC8" opacity="0.7"/>
+        <circle cx="620" cy="360" r="18" fill="#C8DEC8" opacity="0.7"/>
+
+        <!-- Generic buildings (grey) -->
+        <rect x="40" y="130" width="80" height="60" rx="3" fill="#D8DED8" stroke="#C0C8C0" stroke-width="1"/>
+        <text x="80" y="165" text-anchor="middle" font-family="Space Grotesk,sans-serif" font-size="8" fill="#707870">Faculty Block</text>
+
+        <rect x="500" y="130" width="80" height="60" rx="3" fill="#D8DED8" stroke="#C0C8C0" stroke-width="1"/>
+        <text x="540" y="165" text-anchor="middle" font-family="Space Grotesk,sans-serif" font-size="8" fill="#707870">Admin Block</text>
+
+        <rect x="40" y="300" width="80" height="60" rx="3" fill="#D8DED8" stroke="#C0C8C0" stroke-width="1"/>
+        <text x="80" y="335" text-anchor="middle" font-family="Space Grotesk,sans-serif" font-size="8" fill="#707870">Lecture Hall A</text>
+
+        <rect x="500" y="300" width="80" height="60" rx="3" fill="#D8DED8" stroke="#C0C8C0" stroke-width="1"/>
+        <text x="540" y="335" text-anchor="middle" font-family="Space Grotesk,sans-serif" font-size="8" fill="#707870">Lecture Hall B</text>
+
+        <!-- PROJECT BUILDINGS (highlighted, interactive) -->
+
+        <!-- Smart Computer Lab -->
+        <g class="map-building" tabindex="0" aria-label="Smart Computer Lab — 60-workstation facility, 68% funded">
+          <rect x="200" y="100" width="110" height="80" rx="4" fill="#0B6B3A" opacity="0.85" stroke="#D4AF37" stroke-width="2"/>
+          <text x="255" y="132" text-anchor="middle" font-family="Space Grotesk,sans-serif" font-size="9" font-weight="600" fill="#D4AF37">Smart</text>
+          <text x="255" y="145" text-anchor="middle" font-family="Space Grotesk,sans-serif" font-size="9" font-weight="600" fill="#D4AF37">Computer Lab</text>
+          <circle cx="255" cy="162" r="8" fill="#D4AF37"/>
+          <text x="255" y="166" text-anchor="middle" font-family="Space Grotesk,sans-serif" font-size="7" font-weight="700" fill="#073F22">68%</text>
+        </g>
+
+        <!-- Innovation Hub -->
+        <g class="map-building" tabindex="0" aria-label="Innovation Hub — co-working and incubation space, 56% funded">
+          <rect x="380" y="100" width="100" height="80" rx="4" fill="#A8842A" opacity="0.9" stroke="#D4AF37" stroke-width="2"/>
+          <text x="430" y="132" text-anchor="middle" font-family="Space Grotesk,sans-serif" font-size="9" font-weight="600" fill="white">Innovation</text>
+          <text x="430" y="145" text-anchor="middle" font-family="Space Grotesk,sans-serif" font-size="9" font-weight="600" fill="white">Hub</text>
+          <circle cx="430" cy="162" r="8" fill="white"/>
+          <text x="430" y="166" text-anchor="middle" font-family="Space Grotesk,sans-serif" font-size="7" font-weight="700" fill="#A8842A">56%</text>
+        </g>
+
+        <!-- Resource Centre -->
+        <g class="map-building" tabindex="0" aria-label="Department Resource Centre — library and study space, 18% funded">
+          <rect x="200" y="280" width="110" height="80" rx="4" fill="#073F22" opacity="0.85" stroke="#D4AF37" stroke-width="2" stroke-dasharray="4 3"/>
+          <text x="255" y="310" text-anchor="middle" font-family="Space Grotesk,sans-serif" font-size="9" font-weight="600" fill="#D4AF37">Resource</text>
+          <text x="255" y="323" text-anchor="middle" font-family="Space Grotesk,sans-serif" font-size="9" font-weight="600" fill="#D4AF37">Centre</text>
+          <circle cx="255" cy="340" r="8" fill="#D4AF37" opacity="0.6"/>
+          <text x="255" y="344" text-anchor="middle" font-family="Space Grotesk,sans-serif" font-size="7" font-weight="700" fill="#073F22">18%</text>
+        </g>
+
+        <!-- AI & Robotics Lab (future) -->
+        <g class="map-building" tabindex="0" aria-label="AI & Robotics Lab — upcoming, planning phase">
+          <rect x="380" y="280" width="100" height="80" rx="4" fill="#4B5048" opacity="0.5" stroke="#D4AF37" stroke-width="1.5" stroke-dasharray="5 4"/>
+          <text x="430" y="310" text-anchor="middle" font-family="Space Grotesk,sans-serif" font-size="9" font-weight="600" fill="#F4F7F4">AI &amp; Robotics</text>
+          <text x="430" y="323" text-anchor="middle" font-family="Space Grotesk,sans-serif" font-size="9" font-weight="600" fill="#F4F7F4">Lab</text>
+          <text x="430" y="340" text-anchor="middle" font-family="Space Grotesk,sans-serif" font-size="7" fill="#D4AF37">Planned · 2027</text>
+        </g>
+
+        <!-- Map legend -->
+        <rect x="15" y="398" width="12" height="12" rx="2" fill="#0B6B3A"/>
+        <text x="31" y="408" font-family="Space Grotesk,sans-serif" font-size="9" fill="#4B5048">Active Project</text>
+        <rect x="120" y="398" width="12" height="12" rx="2" fill="#4B5048" opacity="0.5"/>
+        <text x="136" y="408" font-family="Space Grotesk,sans-serif" font-size="9" fill="#4B5048">Planned</text>
+        <rect x="210" y="398" width="12" height="12" rx="2" fill="#D8DED8"/>
+        <text x="226" y="408" font-family="Space Grotesk,sans-serif" font-size="9" fill="#4B5048">Other Building</text>
+
+        <!-- Compass -->
+        <circle cx="665" cy="40" r="18" fill="white" stroke="#C0C8C0" stroke-width="1"/>
+        <text x="665" y="35" text-anchor="middle" font-family="Space Grotesk,sans-serif" font-size="10" font-weight="700" fill="#0B6B3A">N</text>
+        <path d="M665 42 L662 52 L665 49 L668 52 Z" fill="#0B6B3A"/>
+
+      </svg>
+    </div>
+  </section>
+
+
+  <!-- ===================================================================
+       VOLUNTEER SECTION
+  ==================================================================== -->
+  <section id="volunteer" class="bg-mist py-20 sm:py-28">
+    <div class="container-content">
+      <div class="mx-auto max-w-2xl text-center mb-14">
+        <p class="eyebrow eyebrow--light mx-auto mb-4 justify-center">
+          <i class="fa-solid fa-hand-heart"></i> Volunteer
+        </p>
+        <h2 class="font-display text-3xl font-semibold text-ink sm:text-4xl">
+          Give time, not just money.
+        </h2>
+        <p class="mt-4 font-body text-sm text-ink-soft sm:text-base">
+          Your expertise matters as much as your contribution. Here's how you can plug in.
+        </p>
+      </div>
+
+      <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        <div class="reveal-on-scroll rounded-2xl border border-ink/8 bg-white p-6 hover:-translate-y-1 transition-transform duration-300">
+          <span class="flex h-11 w-11 items-center justify-center rounded-full bg-forest/10 text-forest mb-4"><i class="fa-solid fa-chalkboard-user"></i></span>
+          <h3 class="font-display text-base font-semibold text-ink">Mentor Students</h3>
+          <p class="mt-2 font-body text-sm text-ink-soft leading-relaxed">Commit 2–4 hours a month to guide a student through career decisions, technical challenges, or professional development.</p>
+          <a href="join.html" class="mt-4 inline-flex items-center gap-1.5 font-body text-sm font-semibold text-forest hover:gap-2.5 transition-all">Sign up <i class="fa-solid fa-arrow-right text-xs"></i></a>
+        </div>
+        <div class="reveal-on-scroll rounded-2xl border border-ink/8 bg-white p-6 hover:-translate-y-1 transition-transform duration-300">
+          <span class="flex h-11 w-11 items-center justify-center rounded-full bg-forest/10 text-forest mb-4"><i class="fa-solid fa-person-chalkboard"></i></span>
+          <h3 class="font-display text-base font-semibold text-ink">Teach Workshops</h3>
+          <p class="mt-2 font-body text-sm text-ink-soft leading-relaxed">Lead a one-day session on your area of expertise — cloud computing, product design, entrepreneurship, or anything in-demand.</p>
+          <a href="join.html" class="mt-4 inline-flex items-center gap-1.5 font-body text-sm font-semibold text-forest hover:gap-2.5 transition-all">Propose a workshop <i class="fa-solid fa-arrow-right text-xs"></i></a>
+        </div>
+        <div class="reveal-on-scroll rounded-2xl border border-ink/8 bg-white p-6 hover:-translate-y-1 transition-transform duration-300">
+          <span class="flex h-11 w-11 items-center justify-center rounded-full bg-forest/10 text-forest mb-4"><i class="fa-solid fa-microphone-lines"></i></span>
+          <h3 class="font-display text-base font-semibold text-ink">Career Talks</h3>
+          <p class="mt-2 font-body text-sm text-ink-soft leading-relaxed">Share your story with a 30-minute talk at our monthly virtual events or in-person sessions on campus.</p>
+          <a href="join.html" class="mt-4 inline-flex items-center gap-1.5 font-body text-sm font-semibold text-forest hover:gap-2.5 transition-all">Book a slot <i class="fa-solid fa-arrow-right text-xs"></i></a>
+        </div>
+        <div class="reveal-on-scroll rounded-2xl border border-ink/8 bg-white p-6 hover:-translate-y-1 transition-transform duration-300">
+          <span class="flex h-11 w-11 items-center justify-center rounded-full bg-forest/10 text-forest mb-4"><i class="fa-solid fa-file-lines"></i></span>
+          <h3 class="font-display text-base font-semibold text-ink">Review CVs</h3>
+          <p class="mt-2 font-body text-sm text-ink-soft leading-relaxed">Give 30 minutes on a weekend to review a final-year student's resume and LinkedIn profile.</p>
+          <a href="join.html" class="mt-4 inline-flex items-center gap-1.5 font-body text-sm font-semibold text-forest hover:gap-2.5 transition-all">Join the pool <i class="fa-solid fa-arrow-right text-xs"></i></a>
+        </div>
+        <div class="reveal-on-scroll rounded-2xl border border-ink/8 bg-white p-6 hover:-translate-y-1 transition-transform duration-300">
+          <span class="flex h-11 w-11 items-center justify-center rounded-full bg-forest/10 text-forest mb-4"><i class="fa-solid fa-box-open"></i></span>
+          <h3 class="font-display text-base font-semibold text-ink">Donate Equipment</h3>
+          <p class="mt-2 font-body text-sm text-ink-soft leading-relaxed">Old laptops, monitors, networking gear, and books in good condition are always needed for the lab and resource centre.</p>
+          <a href="support.html" class="mt-4 inline-flex items-center gap-1.5 font-body text-sm font-semibold text-forest hover:gap-2.5 transition-all">Learn more <i class="fa-solid fa-arrow-right text-xs"></i></a>
+        </div>
+        <div class="reveal-on-scroll rounded-2xl border border-ink/8 bg-white p-6 hover:-translate-y-1 transition-transform duration-300">
+          <span class="flex h-11 w-11 items-center justify-center rounded-full bg-forest/10 text-forest mb-4"><i class="fa-solid fa-building-user"></i></span>
+          <h3 class="font-display text-base font-semibold text-ink">Industry Partnerships</h3>
+          <p class="mt-2 font-body text-sm text-ink-soft leading-relaxed">Connect us to your employer for internship slots, sponsored projects, or guest speakers at our annual conference.</p>
+          <a href="index.html#contact" class="mt-4 inline-flex items-center gap-1.5 font-body text-sm font-semibold text-forest hover:gap-2.5 transition-all">Get in touch <i class="fa-solid fa-arrow-right text-xs"></i></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ===================================================================
+       SPONSOR CTA
+  ==================================================================== -->
+  <section id="sponsor-cta" class="container-content py-10 pb-20 sm:pb-28">
+    <div class="cta-banner">
+      <svg class="cta-banner__pattern" viewBox="0 0 800 400" aria-hidden="true">
+        <g stroke="#D4AF37" stroke-width="1" fill="none" opacity="0.4">
+          <line x1="80" y1="60" x2="220" y2="40"/><line x1="220" y1="40" x2="360" y2="100"/>
+          <line x1="360" y1="100" x2="540" y2="60"/><line x1="540" y1="60" x2="700" y2="120"/>
+          <line x1="80" y1="60" x2="160" y2="200"/><line x1="160" y1="200" x2="360" y2="100"/>
+          <line x1="360" y1="100" x2="480" y2="240"/><line x1="540" y1="60" x2="620" y2="220"/>
+          <line x1="480" y1="240" x2="620" y2="220"/><line x1="160" y1="200" x2="260" y2="330"/>
+          <line x1="480" y1="240" x2="420" y2="350"/><line x1="620" y1="220" x2="700" y2="340"/>
+        </g>
+        <g fill="#D4AF37" opacity="0.6">
+          <circle cx="80" cy="60" r="4"/><circle cx="220" cy="40" r="4"/><circle cx="360" cy="100" r="4"/>
+          <circle cx="540" cy="60" r="4"/><circle cx="700" cy="120" r="4"/><circle cx="160" cy="200" r="4"/>
+          <circle cx="480" cy="240" r="4"/><circle cx="620" cy="220" r="4"/><circle cx="260" cy="330" r="4"/>
+          <circle cx="420" cy="350" r="4"/><circle cx="700" cy="340" r="4"/>
+        </g>
+      </svg>
+      <div class="relative mx-auto max-w-2xl text-center">
+        <p class="eyebrow justify-center mx-auto mb-6">
+          <i class="fa-solid fa-trophy"></i> Become a Sponsor
+        </p>
+        <h2 class="font-display text-3xl font-semibold text-white sm:text-4xl lg:text-5xl">
+          Help Build the Next Success Story
+        </h2>
+        <p class="mt-5 font-body text-base text-white/75 sm:text-lg">
+          Every project above exists because alumni chose to invest in the next generation. Yours can too.
+        </p>
+        <div class="mt-9 flex flex-wrap items-center justify-center gap-4">
+          <a href="support.html" class="btn-primary">
+            <i class="fa-solid fa-hand-holding-dollar text-xs"></i> Sponsor a Project
+          </a>
+          <a href="support.html" class="btn-outline-light">
+            <i class="fa-solid fa-heart text-xs"></i> Donate
+          </a>
+          <a href="join.html" class="btn-outline-light">
+            <i class="fa-solid fa-id-card text-xs"></i> Become a Financial Member
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ===================================================================
+       CLOSING SECTION
+  ==================================================================== -->
+  <section class="relative overflow-hidden bg-gradient-to-br from-forest-dark via-forest to-forest-dark py-24 sm:py-32">
+    <svg class="absolute inset-0 h-full w-full" viewBox="0 0 1440 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <g stroke="#D4AF37" stroke-width="1" fill="none" opacity="0.3">
+        <line x1="0" y1="100" x2="200" y2="60"/><line x1="200" y1="60" x2="450" y2="140"/>
+        <line x1="450" y1="140" x2="700" y2="80"/><line x1="700" y1="80" x2="1000" y2="160"/>
+        <line x1="1000" y1="160" x2="1250" y2="90"/><line x1="1250" y1="90" x2="1440" y2="180"/>
+        <line x1="200" y1="60" x2="300" y2="250"/><line x1="450" y1="140" x2="580" y2="320"/>
+        <line x1="700" y1="80" x2="800" y2="300"/><line x1="1000" y1="160" x2="1100" y2="380"/>
+      </g>
+      <g fill="#D4AF37" opacity="0.5">
+        <circle cx="200" cy="60" r="4"/><circle cx="450" cy="140" r="4"/><circle cx="700" cy="80" r="4"/>
+        <circle cx="1000" cy="160" r="4"/><circle cx="1250" cy="90" r="4"/>
+      </g>
+    </svg>
+    <div class="absolute inset-0 bg-forest-dark/40"></div>
+
+    <div class="container-content relative text-center">
+      <p class="eyebrow mx-auto mb-6 justify-center">
+        <i class="fa-solid fa-infinity"></i> Legacy
+      </p>
+      <h2 class="mx-auto max-w-3xl font-display text-3xl font-semibold text-white sm:text-4xl lg:text-5xl leading-snug">
+        Legacy Isn't Built Overnight. It Is Built One Student, One Project, and One Generation at a Time.
+      </h2>
+      <p class="mt-6 mx-auto max-w-xl font-body text-base text-white/75 sm:text-lg">
+        Every lab we build, every scholarship we award, every mentor we connect — is a brick. And we're building something that will stand long after us.
+      </p>
+      <div class="mt-10 flex flex-wrap items-center justify-center gap-4">
+        <a href="join.html" class="btn-primary">
+          Join the Alumni <i class="fa-solid fa-arrow-right text-xs"></i>
+        </a>
+        <a href="support.html" class="btn-outline-light">
+          Support Our Mission <i class="fa-solid fa-heart text-xs"></i>
+        </a>
+      </div>
+    </div>
+  </section>
+
+
+
+  <!-- ===================================================================
+       SITE FOOTER
+       Four-column nav + brand + social + legal bottom bar.
+       Matches the dark-green brand palette used across the site.
+  ==================================================================== -->
+  <footer class="bg-gradient-to-b from-forest-dark to-[#041A0E]" aria-label="Site footer">
+
+    <!-- Top: logo + columns + newsletter -->
+    <div class="container-content py-16 sm:py-20">
+      <div class="grid grid-cols-1 gap-12 sm:grid-cols-2 lg:grid-cols-6">
+
+        <!-- Brand column (spans 2 of 6 on large) -->
+        <div class="lg:col-span-2">
+          <a href="index.html" class="inline-flex items-center gap-3 mb-5" aria-label="NACOS UNN Alumni Association — homepage">
+            <div class="w-10 h-10 rounded-full overflow-hidden bg-white/5 flex items-center justify-center">
+              <img class="w-full h-full" src="./images/nacos_logo.jpg" alt="NACOS LOGO">
+            </div>
+            <span class="flex flex-col leading-tight">
+              <span class="font-display text-base font-semibold text-white">NACOS UNN Alumni</span>
+              <span class="font-mono text-[9px] uppercase tracking-[0.14em] text-white/50">Building Generations of Excellence</span>
+            </span>
+          </a>
+
+          <p class="font-body text-sm leading-relaxed text-white/60 max-w-xs">
+            Uniting Computer Science graduates of the University of Nigeria, Nsukka to advance student success and transform the department.
+          </p>
+
+          <!-- Social icons -->
+          <div class="mt-6 flex flex-wrap gap-2">
+            <a href="#" class="flex h-9 w-9 items-center justify-center rounded-full border border-white/15 text-white/60 transition-all duration-200 hover:border-gold hover:text-gold" aria-label="Follow us on X (Twitter)">
+              <i class="fa-brands fa-x-twitter text-sm"></i>
+            </a>
+            <a href="#" class="flex h-9 w-9 items-center justify-center rounded-full border border-white/15 text-white/60 transition-all duration-200 hover:border-gold hover:text-gold" aria-label="Connect on LinkedIn">
+              <i class="fa-brands fa-linkedin-in text-sm"></i>
+            </a>
+            <a href="#" class="flex h-9 w-9 items-center justify-center rounded-full border border-white/15 text-white/60 transition-all duration-200 hover:border-gold hover:text-gold" aria-label="Follow us on Facebook">
+              <i class="fa-brands fa-facebook-f text-sm"></i>
+            </a>
+            <a href="#" class="flex h-9 w-9 items-center justify-center rounded-full border border-white/15 text-white/60 transition-all duration-200 hover:border-gold hover:text-gold" aria-label="Follow us on Instagram">
+              <i class="fa-brands fa-instagram text-sm"></i>
+            </a>
+            <a href="#" class="flex h-9 w-9 items-center justify-center rounded-full border border-white/15 text-white/60 transition-all duration-200 hover:border-gold hover:text-gold" aria-label="Subscribe on YouTube">
+              <i class="fa-brands fa-youtube text-sm"></i>
+            </a>
+            <a href="#" class="flex h-9 w-9 items-center justify-center rounded-full border border-white/15 text-white/60 transition-all duration-200 hover:border-gold hover:text-gold" aria-label="Find us on GitHub">
+              <i class="fa-brands fa-github text-sm"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Nav column 1: About -->
+        <div>
+          <h3 class="font-mono text-[11px] uppercase tracking-[0.18em] text-gold-soft mb-5">About</h3>
+          <ul class="space-y-3" role="list">
+            <li><a href="about.html" class="font-body text-sm text-white/60 transition-colors duration-200 hover:text-white">Our Story</a></li>
+            <li><a href="about.html#vision-mission" class="font-body text-sm text-white/60 transition-colors duration-200 hover:text-white">Vision &amp; Mission</a></li>
+            <li><a href="about.html#leadership" class="font-body text-sm text-white/60 transition-colors duration-200 hover:text-white">Leadership</a></li>
+            <li><a href="index.html#contact" class="font-body text-sm text-white/60 transition-colors duration-200 hover:text-white">Contact</a></li>
+          </ul>
+        </div>
+
+        <!-- Nav column 2: Programs -->
+        <div>
+          <h3 class="font-mono text-[11px] uppercase tracking-[0.18em] text-gold-soft mb-5">Programs</h3>
+          <ul class="space-y-3" role="list">
+            <li><a href="initiatives.html#infrastructure" class="font-body text-sm text-white/60 transition-colors duration-200 hover:text-white">Infrastructure</a></li>
+            <li><a href="initiatives.html#scholarships" class="font-body text-sm text-white/60 transition-colors duration-200 hover:text-white">Scholarships</a></li>
+            <li><a href="initiatives.html#mentorship" class="font-body text-sm text-white/60 transition-colors duration-200 hover:text-white">Mentorship</a></li>
+            <li><a href="initiatives.html#career-coaching" class="font-body text-sm text-white/60 transition-colors duration-200 hover:text-white">Career Development</a></li>
+          </ul>
+        </div>
+
+        <!-- Nav column 3: Community -->
+        <div>
+          <h3 class="font-mono text-[11px] uppercase tracking-[0.18em] text-gold-soft mb-5">Community</h3>
+          <ul class="space-y-3" role="list">
+            <li><a href="join.html" class="font-body text-sm text-white/60 transition-colors duration-200 hover:text-white">Join Alumni</a></li>
+            <li><a href="projects.html#volunteer" class="font-body text-sm text-white/60 transition-colors duration-200 hover:text-white">Volunteer</a></li>
+            <li><a href="index.html#events" class="font-body text-sm text-white/60 transition-colors duration-200 hover:text-white">Events</a></li>
+            <li><a href="index.html#latest-news" class="font-body text-sm text-white/60 transition-colors duration-200 hover:text-white">News</a></li>
+          </ul>
+        </div>
+
+        <!-- Nav column 4: Resources -->
+        <div>
+          <h3 class="font-mono text-[11px] uppercase tracking-[0.18em] text-gold-soft mb-5">Resources</h3>
+          <ul class="space-y-3" role="list">
+            <li><a href="projects.html#financial-transparency" class="font-body text-sm text-white/60 transition-colors duration-200 hover:text-white">Annual Reports</a></li>
+            <li><a href="projects.html#financial-transparency" class="font-body text-sm text-white/60 transition-colors duration-200 hover:text-white">Financial Transparency</a></li>
+            <li><a href="support.html#faq" class="font-body text-sm text-white/60 transition-colors duration-200 hover:text-white">FAQs</a></li>
+            <li><a href="#privacy" class="font-body text-sm text-white/60 transition-colors duration-200 hover:text-white">Privacy Policy</a></li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Divider -->
+    <div class="border-t border-white/10"></div>
+
+    <!-- Bottom bar -->
+    <div class="container-content py-6">
+      <div class="flex flex-col items-center gap-3 text-center sm:flex-row sm:justify-between sm:text-left">
+        <p class="font-body text-xs text-white/40">
+          © 2026 NACOS UNN Alumni Association. All Rights Reserved.
+        </p>
+        <p class="font-mono text-[10px] uppercase tracking-[0.14em] text-white/30">
+          Built by alumni, for alumni — University of Nigeria, Nsukka
+        </p>
+      </div>
+    </div>
+
+  </footer>
+
+
+
+  <!-- ===================================================================
+       JAVASCRIPT
+  ==================================================================== -->
+  <script>
+    // ── Mobile Menu ──────────────────────────────────────────────────────
+    const menuBtn = document.getElementById('mobile-menu-btn');
+    const closeBtn = document.getElementById('mobile-menu-close');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    function openMobileMenu() {
+      mobileMenu.classList.remove('hidden');
+      mobileMenu.classList.add('flex', 'is-open');
+      document.body.classList.add('overflow-hidden');
+      menuBtn.setAttribute('aria-expanded', 'true');
+      closeBtn.focus();
+    }
+    function closeMobileMenu() {
+      mobileMenu.classList.add('hidden');
+      mobileMenu.classList.remove('flex', 'is-open');
+      document.body.classList.remove('overflow-hidden');
+      menuBtn.setAttribute('aria-expanded', 'false');
+      menuBtn.focus();
+    }
+    menuBtn.addEventListener('click', openMobileMenu);
+    closeBtn.addEventListener('click', closeMobileMenu);
+    mobileMenu.querySelectorAll('a').forEach(l => l.addEventListener('click', closeMobileMenu));
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && !mobileMenu.classList.contains('hidden')) closeMobileMenu();
+    });
+
+    // ── Category Filters ─────────────────────────────────────────────────
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const projectCards = document.querySelectorAll('#projects-grid [data-category]');
+
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        filterBtns.forEach(b => { b.classList.remove('active'); b.setAttribute('aria-selected', 'false'); });
+        btn.classList.add('active');
+        btn.setAttribute('aria-selected', 'true');
+
+        const cat = btn.dataset.category;
+        projectCards.forEach(card => {
+          if (cat === 'all' || card.dataset.category === cat) {
+            card.style.display = '';
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(12px)';
+            requestAnimationFrame(() => {
+              card.style.transition = 'opacity 0.35s ease, transform 0.35s ease';
+              card.style.opacity = '1';
+              card.style.transform = 'translateY(0)';
+            });
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      });
+    });
+
+    // ── Progress Bar Scroll Trigger ───────────────────────────────────────
+    const bars = document.querySelectorAll('.progress-bar');
+    const barObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate');
+          barObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.3 });
+    bars.forEach(bar => barObserver.observe(bar));
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,268 @@
+Overall Design Prompt
+------------------------
+Build a modern, responsive website for the NACOS UNN Alumni Association.
+
+The design should feel premium, professional, clean and community-driven.
+
+Theme colors should use the NACOS/UNN identity:
+
+Deep Green (#0B6B3A)
+Gold (#D4AF37)
+White
+Dark Gray
+
+Typography should be modern and readable.
+
+Use generous whitespace, smooth scroll animations, glassmorphism only where appropriate, subtle gradients, rounded corners and clean cards.
+
+The website should look like a blend between a university foundation website and a modern tech nonprofit.
+
+Every section should include clear CTAs.
+
+Icons should use FontAwesome Icons.
+
+If anything can't be done without html and tailwindcss skip it. use JavaScript only for mobile menu.
+Let me know you understand this and await further instructions before beginning any execution. We will build this step by step. I'll give you the prompt you build, i prompt again... till we're done.
+Confirm you understand
+
+Navigation Prompt
+
+Design a modern, responsive, and elegant navigation bar for the NACOS UNN Alumni Association website.
+
+The navigation should remain sticky at the top while scrolling, with a subtle backdrop blur, semi-transparent white background, thin bottom border, and smooth transition effects.
+
+The style should feel like a combination of a modern university website and a professional nonprofit organization.
+
+Use generous spacing, clean typography, and subtle hover animations.
+
+On mobile, collapse into a full-screen slide-in menu with smooth animations.
+
+
+
+
+Mobile Navigation
+
+Create a premium full-screen mobile menu.
+
+
+
+
+Ensure the navigation:
+
+Is fully keyboard accessible.
+Includes visible focus states.
+Has proper ARIA labels.
+Supports screen readers.
+Meets WCAG AA color contrast guidelines.
+
+PAGE 1: HOME
+Hero Section Prompt
+
+Design a full-screen hero section.
+
+Headline:
+
+Building Today's Alumni. Empowering Tomorrow's Leaders.
+
+Subheading:
+
+The NACOS UNN Alumni Association exists to unite graduates of the University of Nigeria, Nsukka Computer Science Department in advancing student success, strengthening the department, and creating opportunities that last for generations.
+
+Why We Exist
+
+Create a two-column section explaining why the association was formed.
+
+Left side:
+A compelling story describing the disconnect between alumni and current students.
+
+Right side:
+Four statistic cards (placeholder values):
+
+
+Build a three-card section showing:
+
+
+
+PAGE 2 — ABOUT
+Hero
+
+Title:
+
+Our Story
+
+Explain why the association was established and the long-term vision behind it.
+
+Display Vision and Mission side by side inside elegant cards.
+
+Core Objectives
+
+Build a visual roadmap showing:
+
+
+
+PAGE 3 — INITIATIVES
+Hero
+
+Title:
+
+Our Strategic Initiatives
+
+Subtitle:
+
+Creating impact through sustainable investments in students and the department.
+
+Infrastructure
+
+Design a large section showcasing:
+
+Modern Computer Lab
+
+Innovation Hub
+
+Co-working Space
+
+Smart Classrooms
+
+Resource Center
+
+
+
+PAGE 4 — IMPACT & SUPPORT
+Hero
+
+Title:
+
+Every Contribution Builds the Future
+
+Why Funding Matters
+
+Explain the financial sustainability model using illustrations.
+
+Funding Model
+
+
+
+Become a Financial Member
+
+PAGE 5 — JOIN THE COMMUNITY
+Hero
+
+Headline:
+
+Join a Community That Builds Generations.
+
+Why Join
+
+Cards:
+
+Networking
+
+Mentorship
+
+Giving Back
+
+Leadership
+
+Professional Community
+
+Legacy
+
+Membership Journey roadmap
+
+Create a stepper
+
+
+FAQ
+
+
+PAGE 6 — PROJECTS & IMPACT
+Overall Prompt
+
+Build a modern, transparent project showcase page for the NACOS UNN Alumni Association. The page should inspire trust by clearly displaying current, completed, and upcoming projects. The design should resemble a nonprofit annual impact report combined with a modern project management dashboard. Use clean cards, progress indicators, timelines, funding bars, and subtle animations.
+
+Hero Section
+Prompt
+
+Design a full-width hero section.
+
+Headline:
+
+Turning Alumni Contributions into Lasting Impact
+
+Featured Projects
+Prompt
+
+Create a grid of large project cards with beautiful illustrations.
+
+
+Example projects:
+
+Smart Computer Laboratory
+Innovation Hub
+Student Scholarship Fund
+Career Accelerator Program
+Department Resource Centre
+Annual Tech Conference
+Project Categories
+Prompt
+
+Create filter buttons.
+
+
+Use animated progress bars.
+
+
+Display future initiatives as roadmap cards.
+
+
+
+
+Create an infographic section
+
+
+
+Department Projects
+
+
+
+Timeline
+Prompt
+
+Create an animated timeline.
+
+
+
+Success Stories
+Prompt
+
+Create testimonial cards.
+
+
+Mini Dashboard
+Prompt
+
+Create a modern statistics dashboard.
+
+Volunteer Section
+Prompt
+
+Create a volunteer recruitment section.
+
+Closing Section
+Prompt
+
+Create a premium full-width closing section.
+
+Footer prompts
+Create a professional footer with four columns.
+
+
+
+Include social media icons for:
+
+X (Twitter)
+LinkedIn
+Facebook
+Instagram
+YouTube
+GitHub
